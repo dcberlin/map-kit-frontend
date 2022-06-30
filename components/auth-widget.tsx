@@ -22,7 +22,7 @@ function AuthWidget() {
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
-  }, [onClickOutside]);
+  });
 
   return (
     <div className="fixed right-5 top-5">
@@ -38,6 +38,7 @@ function AuthWidget() {
                 <UserCircleIcon />
               ) : (
                 <img
+                  alt="The profile image from your social account you logged in with (Google etc.)"
                   className="rounded-full"
                   src={user.picture}
                   onError={() => setShowFallbackIcon(true)}
