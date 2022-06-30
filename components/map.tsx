@@ -1,5 +1,5 @@
 import React from "react";
-import Map, { Source, FlyToInterpolator } from "react-map-gl";
+import Map, { Source } from "react-map-gl";
 
 import Pins from "../components/pins";
 
