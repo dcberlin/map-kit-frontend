@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PlusIcon } from "@heroicons/react/solid";
 
-import GenericError from "../components/error";
+import ErrorScreen from "../components/error-screen";
 import AuthWidget from "../components/auth-widget";
 
 export default function Communities() {
@@ -39,6 +39,6 @@ export default function Communities() {
     );
   } else if (error) {
     console.error(error);
-    return <GenericError />;
+    return <ErrorScreen />;
   }
 }

@@ -12,7 +12,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/solid";
 
-import GenericError from "../../components/error";
+import ErrorScreen from "../../components/error-screen";
 import AuthWidget from "../../components/auth-widget";
 import LoadingScreen from "../../components/loading-screen";
 
@@ -39,7 +39,7 @@ export default function Communities() {
 
   if (error) {
     console.error(error);
-    return <GenericError />;
+    return <ErrorScreen />;
   }
 
   if (!data) {

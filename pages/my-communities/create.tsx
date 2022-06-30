@@ -9,7 +9,6 @@ import Map from "react-map-gl";
 
 import AuthWidget from "../../components/auth-widget";
 import CommunityForm from "../../components/community-form";
-import GenericError from "../../components/error";
 import LoadingScreen from "../../components/loading-screen";
 
 export default function CommunityMap({ communityId }) {

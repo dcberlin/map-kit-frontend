@@ -7,7 +7,7 @@ import { Formik, Field, Form } from "formik";
 
 import AuthWidget from "../../components/auth-widget";
 import CommunityForm from "../../components/community-form";
-import GenericError from "../../components/error";
+import ErrorScreen from "../components/error-screen";
 import LoadingScreen from "../../components/loading-screen";
 
 export default function MyCommunity() {
@@ -56,7 +56,7 @@ export default function MyCommunity() {
 
   if (error) {
     console.error(error);
-    return <GenericError />;
+    return <ErrorScreen />;
   }
   if (!community) {
     return <LoadingScreen />;

@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { GlobeIcon, MapIcon } from "@heroicons/react/solid";
 
-import GenericError from "../components/error";
 import MapWidget from "../components/map";
 
 export default function CommunityMap({ locations, community }) {
