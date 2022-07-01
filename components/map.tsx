@@ -4,9 +4,10 @@ import Map, { Source } from "react-map-gl";
 import Pins from "../components/pins";
 
 /**
- * Map with POIs. The viewport is set to frame the central part of Berlin.
+ * Map with POIs. The initial viewport is set to the specified bbox
  * @param {object} locations The POI data as GeoJSON object.
- * @param {function} onClick Callback for a click event on a pin.
+ * @param {array} bbox Bounding box as array of four coordinates
+ * [minLon, minLat, maxLon, maxLat]
  */
 export default function MapWidget({ locations, bbox }) {
   const pinData = {
