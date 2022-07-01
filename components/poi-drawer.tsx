@@ -13,7 +13,7 @@ import { XCircleIcon } from "@heroicons/react/outline";
  */
 export default function MapWidget({ locations, bbox }) {
   const [selectedPoi, setSelectedPoi] = useSelectedPoi();
-  const { name, address, email, phone, website, description } =
+  const { name, address, email, phone, website, description, category_label } =
     selectedPoi?.properties || {};
 
   return (
@@ -25,22 +25,25 @@ export default function MapWidget({ locations, bbox }) {
     >
       <div className="flex flex-col justify-start">
         <div className="flex justify-between">
-          <h2 className="font-bold text-gray-700">{name}</h2>
+          <div className="flex flex-col">
+            <div className="text-sm text-gray-600">{category_label}</div>
+            <h2 className="font-bold text-gray-700">{name}</h2>
+          </div>
           <XCircleIcon
-            className="w-8 h-8 text-gray-400 hover:text-red-400 cursor-pointer"
+            className="flex-none min-w-8 w-8 h-8 text-gray-400 hover:text-red-400 cursor-pointer"
             onClick={() => setSelectedPoi(null)}
           />
         </div>
         <div className="flex flex-col gap-1 mt-5 text-md">
           {address && (
             <div className="flex items-center font-semibold text-gray-600">
-              <LocationMarkerIcon className="flex-none inline h-5 w-5 mr-2 text" />
+              <LocationMarkerIcon className="flex-none inline h-5 w-5 mr-3 text" />
               <div>{address}</div>
             </div>
           )}
           {email && (
             <div className="flex items-center">
-              <MailIcon className="flex-none h-5 w-5 mr-2 text-gray-600" />
+              <MailIcon className="flex-none h-5 w-5 mr-3 text-gray-600" />
               <a href={`mailto://${email}`} className="text-blue-600">
                 {email}
               </a>
@@ -48,13 +51,13 @@ export default function MapWidget({ locations, bbox }) {
           )}
           {phone && (
             <div className="flex items-center text-gray-600">
-              <PhoneIcon className="flex-none h-5 w-5 mr-2" />
+              <PhoneIcon className="flex-none h-5 w-5 mr-3" />
               <a href={`tel:${phone}`}>{phone}</a>
             </div>
           )}
           {website && (
             <div className="flex items-center text-gray-600 mt-1">
-              <ExternalLinkIcon className="flex-none h-5 w-5 mr-2" />
+              <ExternalLinkIcon className="flex-none h-5 w-5 mr-3" />
               <a
                 href={website}
                 target="_blank"
