@@ -1,26 +1,21 @@
 import React from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { GlobeIcon, MapIcon } from "@heroicons/react/solid";
 
-import MapWidget from "../components/map";
+import MapWidget from "../components/map-widget";
+import MapHeader from "../components/map-header";
+import PoiDrawer from "../components/poi-drawer";
+import { PoiProvider, SelectedPoiProvider } from "../context";
 
 export default function CommunityMap({ locations, community }) {
   return (
-    <>
-      <div>
-        <div className="fixed left-5 top-5 z-10 text-gray-700">
-          <div className="flex justify-center items-center gap-2">
-            <MapIcon className="text-red-500 h-8 w-8 opacity-90" />
-            <h1>
-              Harta Diasporei din{" "}
-              <span className="font-bold">{community.name}</span>
-            </h1>
-          </div>
-        </div>
+    <PoiProvider>
+      <SelectedPoiProvider>
+        <MapHeader communityName={community.name} />
+        <PoiDrawer />
         <MapWidget locations={locations} bbox={community.bbox} />
-      </div>
-    </>
+      </SelectedPoiProvider>
+    </PoiProvider>
   );
 }
 
