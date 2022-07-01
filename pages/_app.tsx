@@ -4,6 +4,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 import {
   PoisProvider,
+  SearchPhraseProvider,
   SelectedCategoryProvider,
   SelectedPoiProvider,
 } from "../context";
@@ -23,8 +24,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <PoisProvider>
           <SelectedPoiProvider>
             <SelectedCategoryProvider>
-              <Component {...pageProps} />
-              <Component {...pageProps} />
+              <SearchPhraseProvider>
+                <Component {...pageProps} />
+                <Component {...pageProps} />
+              </SearchPhraseProvider>
             </SelectedCategoryProvider>
           </SelectedPoiProvider>
         </PoisProvider>

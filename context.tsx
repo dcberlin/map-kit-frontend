@@ -62,3 +62,24 @@ export function SelectedCategoryProvider(props) {
     />
   );
 }
+
+/* Search phrase */
+
+const SearchPhrase = React.createContext();
+
+export function useSearchPhrase() {
+  const context = React.useContext(SearchPhrase);
+  if (!context) {
+    throw new Error(
+      "useSearchPhrase must be used within a SearchPhraseProvider"
+    );
+  }
+  return context;
+}
+
+export function SearchPhraseProvider(props) {
+  const [searchPhrase, setSearchPhrase] = React.useState(null);
+  return (
+    <SearchPhrase.Provider value={[searchPhrase, setSearchPhrase]} {...props} />
+  );
+}

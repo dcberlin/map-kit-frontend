@@ -7,19 +7,23 @@ import ListDrawer from "../components/list-drawer";
 import MapWidget from "../components/map-widget";
 import MapHeader from "../components/map-header";
 import PoiDrawer from "../components/poi-drawer";
-import { usePois, useSelectedCategory } from "../context";
+import SearchDrawer from "../components/search-drawer";
+import { usePois, useSelectedCategory, useSearchPhrase } from "../context";
+import { useDebounce } from "../hooks";
 import ErrorScreen from "../components/error-screen";
 
 export default function CommunityMap({ community, categories }) {
   const [pois, setPois] = usePois();
   const [selectedCategory, setSelectedCategory] = useSelectedCategory();
+  const [searchPhrase, setSearchPhrase] = useSearchPhrase();
+  const debouncedSearchPhrase = useDebounce(searchPhrase, 500);
 
   const { locations, error } = useSWR(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL
     }/api/locations/?community__path_slug=${community.path_slug}&category=${
       selectedCategory?.pk ?? ""
-    }`,
+    }&search=${debouncedSearchPhrase ?? ""}`,
     async (url) => {
       const locRes = await fetch(url);
       const locations = await locRes.json();
@@ -39,8 +43,8 @@ export default function CommunityMap({ community, categories }) {
       <div className="fixed right-0 bottom-1/3 z-20">
         <div className="flex flex-col gap-2">
           <FilterDrawer categories={categories} />
+          <SearchDrawer />
           <ListDrawer />
-          {/* Add further drawers here. */}
         </div>
       </div>
 

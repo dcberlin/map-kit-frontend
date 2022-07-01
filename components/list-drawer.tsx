@@ -14,7 +14,7 @@ export default function ListDrawer() {
   return (
     <>
       <div
-        className="w-12 h-12 p-3 rounded-l-full text-gray-600 bg-white drop-shadow-xl cursor-pointer"
+        className="fixed right-0 bottom-[30%] w-12 h-12 p-3 rounded-l-full text-gray-600 bg-white drop-shadow-xl cursor-pointer"
         onClick={() => {
           setOpen(true);
         }}
