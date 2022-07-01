@@ -9,9 +9,9 @@ import {
 import { XCircleIcon } from "@heroicons/react/outline";
 
 /**
- * Map with POIs. The initial viewport is set to the specified bbox
+ * Bottom drawer displaying info about the selected POI
  */
-export default function MapWidget({ locations, bbox }) {
+export default function PoiDrawer() {
   const [selectedPoi, setSelectedPoi] = useSelectedPoi();
   const { name, address, email, phone, website, description, category_label } =
     selectedPoi?.properties || {};
@@ -19,7 +19,7 @@ export default function MapWidget({ locations, bbox }) {
   return (
     <div
       className={`fixed w-screen sm:w-1/2 sm:left-1/4 bottom-0 sm:mb-5 z-30 bg-white p-8
-        drop-shadow-xl rounded transition-all transform ${
+        drop-shadow-xl border-t rounded transition-all transform ${
           !selectedPoi && "translate-y-64"
         } duration-200`}
     >

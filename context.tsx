@@ -2,20 +2,19 @@ import React from "react";
 
 /* Displayed POIs */
 
-const PoiContext = React.createContext();
+const PoisContext = React.createContext();
 
-export function usePoi() {
-  const context = React.useContext(PoiContext);
+export function usePois() {
+  const context = React.useContext(PoisContext);
   if (!context) {
-    throw new Error("usePoi must be used within a PoiProvider");
+    throw new Error("usePoi must be used within a PoisProvider");
   }
   return context;
 }
 
-export function PoiProvider(props) {
-  const [poi, setPoi] = React.useState(null);
-  const value = React.useMemo(() => [poi, setPoi], [poi]);
-  return <PoiContext.Provider value={value} {...props} />;
+export function PoisProvider(props) {
+  const [pois, setPois] = React.useState(null);
+  return <PoisContext.Provider value={[pois, setPois]} {...props} />;
 }
 
 /* Selected POI */
@@ -32,9 +31,34 @@ export function useSelectedPoi() {
 
 export function SelectedPoiProvider(props) {
   const [selectedPoi, setSelectedPoi] = React.useState(null);
-  const value = React.useMemo(
-    () => [selectedPoi, setSelectedPoi],
-    [selectedPoi]
+  return (
+    <SelectedPoiContext.Provider
+      value={[selectedPoi, setSelectedPoi]}
+      {...props}
+    />
   );
-  return <SelectedPoiContext.Provider value={value} {...props} />;
+}
+
+/* Selected category */
+
+const SelectedCategory = React.createContext();
+
+export function useSelectedCategory() {
+  const context = React.useContext(SelectedCategory);
+  if (!context) {
+    throw new Error(
+      "useSelectedCategory must be used within a SelectedCategoryProvider"
+    );
+  }
+  return context;
+}
+
+export function SelectedCategoryProvider(props) {
+  const [selectedCategory, setSelectedCategory] = React.useState(null);
+  return (
+    <SelectedCategory.Provider
+      value={[selectedCategory, setSelectedCategory]}
+      {...props}
+    />
+  );
 }

@@ -2,6 +2,12 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Auth0Provider } from "@auth0/auth0-react";
 
+import {
+  PoisProvider,
+  SelectedCategoryProvider,
+  SelectedPoiProvider,
+} from "../context";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -14,7 +20,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         useRefreshTokens={true}
         cacheLocation="localstorage"
       >
-        <Component {...pageProps} />
+        <PoisProvider>
+          <SelectedPoiProvider>
+            <SelectedCategoryProvider>
+              <Component {...pageProps} />
+              <Component {...pageProps} />
+            </SelectedCategoryProvider>
+          </SelectedPoiProvider>
+        </PoisProvider>
       </Auth0Provider>
     </>
   );
