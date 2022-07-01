@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   ArrowLeftIcon,
-  BadgeCheckIcon,
+  CheckCircleIcon,
   MapIcon,
   PencilAltIcon,
   TrashIcon,
@@ -19,7 +19,7 @@ import LoadingScreen from "../../components/loading-screen";
 export default function Communities() {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
     useAuth0();
-  const yesIcon = <BadgeCheckIcon className="w-5 h-5 text-green-400" />;
+  const yesIcon = <CheckCircleIcon className="w-5 h-5 text-green-400" />;
   const noIcon = <XCircleIcon className="w-5 h-5 text-red-400" />;
   const router = useRouter();
 
