@@ -8,6 +8,7 @@ import MapWidget from "../components/map-widget";
 import MapHeader from "../components/map-header";
 import PoiDrawer from "../components/poi-drawer";
 import SearchDrawer from "../components/search-drawer";
+import LocationProposalModal from "../components/location-proposal-modal";
 import { usePois, useSelectedCategory, useSearchPhrase } from "../context";
 import { useDebounce } from "../hooks";
 import ErrorScreen from "../components/error-screen";
@@ -45,6 +46,7 @@ export default function CommunityMap({ community, categories }) {
           <FilterDrawer categories={categories} />
           <SearchDrawer />
           <ListDrawer />
+          <LocationProposalModal communityPk={community.pk} />
         </div>
       </div>
 

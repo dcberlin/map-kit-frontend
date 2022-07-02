@@ -34,7 +34,7 @@ export default function SearchDrawer({ locations, bbox }) {
     <>
       <div
         ref={ref}
-        className={`fixed h-12 bottom-[40%] w-10/12 sm:w-1/4 bg-white right-0 z-40
+        className={`fixed h-12 bottom-[40%] w-10/12 sm:w-1/4 bg-white right-0 z-30
           drop-shadow-xl transition ${!open && "translate-x-full"}`}
       >
         <div className="absolute -left-12 w-12 h-12 p-3 rounded-l-full bg-white cursor-pointer">
