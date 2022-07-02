@@ -65,7 +65,7 @@ export default function MyCommunity() {
     return <ErrorScreen />;
   }
   if (!community) {
-    return <ArrowLeftIcon className="w-6 h-6" />;
+    return <LoadingScreen />;
   }
   return (
     <>
