@@ -36,7 +36,7 @@ export default function ListDrawer() {
         )}
         {pois && (
           <div className="absolute w-full">
-            <div className="flex h-screen flex-col gap-2 p-4 overflow-y-scroll">
+            <div className="flex h-screen flex-col gap-2 p-4 overflow-y-scroll pb-16">
               {pois.features.map((poi, index) => {
                 const { name, category_label, pk } = poi.properties;
                 return (
