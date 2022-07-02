@@ -2,12 +2,14 @@ import React from "react";
 import { Formik, Field, Form } from "formik";
 import { WebMercatorViewport } from "@math.gl/web-mercator";
 import Map from "react-map-gl";
+import { PencilAltIcon } from "@heroicons/react/solid";
 
 export default function CommunityForm({
   onSubmit,
   initialValues,
   requestFailed,
 }) {
+  const [mapEditable, setMapEditable] = React.useState(false);
   function validateForm(values, props) {
     const errors = {};
 
@@ -105,6 +107,16 @@ export default function CommunityForm({
               Cadrul geografic al hărţii
             </label>
             <div className="rounded-xl drop-shadow-xl">
+              {!mapEditable && (
+                <div
+                  className="absolute bg-black opacity-40 h-full w-full z-10 cursor-pointer"
+                  onClick={() => setMapEditable(true)}
+                >
+                  <div className="flex h-full w-full items-center justify-center">
+                    <PencilAltIcon className="text-white h-12 w-12" />
+                  </div>
+                </div>
+              )}
               <Map
                 id="bbox"
                 initialViewState={{

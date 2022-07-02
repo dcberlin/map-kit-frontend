@@ -1,12 +1,18 @@
 import React from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { ArrowLeftIcon, GlobeIcon } from "@heroicons/react/solid";
+import {
+  ArrowLeftIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  GlobeIcon,
+} from "@heroicons/react/solid";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Formik, Field, Form } from "formik";
 
 import AuthWidget from "../../components/auth-widget";
 import CommunityForm from "../../components/community-form";
+import LocationsForm from "../../components/locations-form";
 import ErrorScreen from "../../components/error-screen";
 import LoadingScreen from "../../components/loading-screen";
 
@@ -59,25 +65,59 @@ export default function MyCommunity() {
     return <ErrorScreen />;
   }
   if (!community) {
-    return <LoadingScreen />;
+    return <ArrowLeftIcon className="w-6 h-6" />;
   }
   return (
     <>
       <AuthWidget />
-      <div className="flex w-screen items-center justify-center bg-gray-200">
-        <div className="flex flex-col mt-20 mb-20 w-2/3 gap-5 px-20 py-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
+      <div className="flex min-h-screen w-screen items-center justify-center bg-gray-200">
+        <div className="flex flex-col mt-20 mb-20 w-2/3 p-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
           <div className="flex w-full justify-end">
             <button onClick={() => router.back()}>
               <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
             </button>
           </div>
-          <CommunityForm
-            initialValues={community}
-            onSubmit={handleSubmit}
-            requestFailed={requestFailed}
-          />
+          <h1 className="text-gray-600 mb-10">
+            Comunitatea <span className="font-bold">{community.name}</span>
+          </h1>
+          <div className="flex flex-col gap-7">
+            <CollapsibleSection title="Profil">
+              <CommunityForm
+                initialValues={community}
+                onSubmit={handleSubmit}
+                requestFailed={requestFailed}
+              />
+            </CollapsibleSection>
+            <CollapsibleSection title="Locaţii">
+              <LocationsForm communityPk={community.pk} />
+            </CollapsibleSection>
+          </div>
         </div>
       </div>
     </>
+  );
+}
+
+function CollapsibleSection({
+  title,
+  collapsed: collapsedInitial = true,
+  children,
+}) {
+  const [collapsed, setCollapsed] = React.useState(collapsedInitial);
+  return (
+    <div className="border-2 border-gray-200 p-6 rounded-lg">
+      <div
+        className={`flex items-center text-gray-600 cursor-pointer`}
+        onClick={() => setCollapsed(!collapsed)}
+      >
+        {collapsed ? (
+          <ChevronDownIcon className="h-8 w-8" />
+        ) : (
+          <ChevronUpIcon className="h-8 w-8" />
+        )}
+        <h2 className="ml-4">{title}</h2>
+      </div>
+      {!collapsed && <div>{children}</div>}
+    </div>
   );
 }
