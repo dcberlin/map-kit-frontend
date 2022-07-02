@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuIcon, SearchIcon, XIcon } from "@heroicons/react/solid";
+import { MenuIcon, SearchIcon, BackspaceIcon } from "@heroicons/react/solid";
 
 import { usePois } from "../context";
 import { useSearchPhrase } from "../context";
@@ -50,8 +50,8 @@ export default function SearchDrawer({ locations, bbox }) {
             value={searchPhrase}
             onChange={onChange}
           ></input>
-          <XIcon
-            className="h-8 w-8 text-gray-600 mr-3 cursor-pointer"
+          <BackspaceIcon
+            className="h-7 w-7 text-red-400 mr-3 cursor-pointer"
             onClick={() => setSearchPhrase("")}
           />
         </div>
