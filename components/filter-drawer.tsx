@@ -66,7 +66,7 @@ export default function FilterDrawer({ categories: initialCategories = [] }) {
                   aria-hidden="true"
                   style={{ color: selectedCategory?.color }}
                 />
-                <label>
+                <label className="cursor-pointer">
                   {selectedCategory
                     ? selectedCategory.label_plural
                     : "Toate categoriile"}
@@ -75,13 +75,13 @@ export default function FilterDrawer({ categories: initialCategories = [] }) {
               <ChevronDownIcon className="h-5 w-5 text-gray-600" />
             </div>
             {showCategoryMenu && (
-              <div className="absolute top-12 h-64 w-full overflow-y-scroll bg-gradient-to-r from-white to-gray-100 rounded-b-md">
+              <div className="absolute top-12 h-64 w-full overflow-y-scroll bg-gradient-to-r from-white to-gray-100 rounded-b-md cursor-pointer">
                 {categories
                   .filter((c) => c !== selectedCategory)
                   .map((category, index) => (
                     <div
                       key={index}
-                      className="flex gap-2 items-center cursor-pointer hover:bg-gray-100 p-2"
+                      className="flex gap-2 items-center hover:bg-gray-100 p-2"
                       onClick={() => {
                         setShowCategoryMenu(false);
                         setSelectedCategory(category);
