@@ -26,7 +26,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             <SelectedCategoryProvider>
               <SearchPhraseProvider>
                 <Component {...pageProps} />
-                <Component {...pageProps} />
               </SearchPhraseProvider>
             </SelectedCategoryProvider>
           </SelectedPoiProvider>

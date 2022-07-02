@@ -22,7 +22,7 @@ export default function Communities() {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-gray-200">
         <AuthWidget />
-        <div className="flex flex-wrap h-2/3 w-2/3 gap-4 p-4 place-content-start drop-shadow-2xl rounded-xl bg-white">
+        <div className="flex flex-wrap w-2/3 gap-4 p-4 place-content-start drop-shadow-2xl rounded-xl bg-white">
           {data.map((community, index) => {
             return (
               <Link key={index} href={`/${community.path_slug}`}>
