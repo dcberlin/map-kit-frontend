@@ -1,7 +1,8 @@
 import React from "react";
-import Map, { Source, Layer, useMap } from "react-map-gl";
+import Map, { Source, Layer, Marker, useMap } from "react-map-gl";
 
 import { useSelectedPoi, usePois } from "../context";
+import { ArrowDownIcon } from "@heroicons/react/solid";
 
 /**
  * Map with POIs. The initial viewport is set to the specified bbox
@@ -29,6 +30,7 @@ export default function MapWidget({ bbox }) {
 
   const onClick = (e) => {
     if (e.features.length > 0) {
+      const { lng, lat } = e.lngLat;
       const [feature] = e.features;
       setSelectedPoi(feature);
     }
@@ -55,6 +57,15 @@ export default function MapWidget({ bbox }) {
         >
           <MapImage />
           <Source id="poi-data" type="geojson" data={pinData}>
+            {selectedPoi?.geometry && (
+              <Marker
+                longitude={selectedPoi.geometry.coordinates[0]}
+                latitude={selectedPoi.geometry.coordinates[1]}
+                anchor="bottom"
+              >
+                <ArrowDownIcon className="text-red-600 pb-3 w-10 h-10 animate-bounce" />
+              </Marker>
+            )}
             <Layer {...layerStyle} />
           </Source>
         </Map>
