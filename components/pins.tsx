@@ -39,7 +39,6 @@ export default function Pins() {
               stroke: "#eee",
               transform: `translate(${-SIZE / 2}px,${-SIZE}px)`,
             }}
-            onClick={() => setSelectedPoi(feature)}
           >
             <path d={ICON} />
           </svg>
