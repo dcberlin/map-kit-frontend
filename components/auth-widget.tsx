@@ -25,7 +25,7 @@ function AuthWidget() {
   });
 
   return (
-    <div className="fixed right-5 top-5">
+    <div className="fixed right-5 top-5 z-20">
       {isAuthenticated ? (
         <div ref={ref} className="flex flex-col">
           <div className="flex gap-3 items-center justify-end">
@@ -46,34 +46,33 @@ function AuthWidget() {
               )}
             </button>
           </div>
-          {menuVisible && (
-            <div
-              className="z-10 mt-2 bg-white drop-shadow-2xl rounded divide-y w-44"
-              onBlur={() => setMenuVisible(false)}
-            >
-              <ul className="py-1 text-sm">
-                <li>
-                  <Link href="/my-communities">
-                    <a className="block px-4 py-2 hover:bg-gray-100">
-                      Comunităţile mele
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    onClick={() =>
-                      logout({
-                        returnTo: process.env.NEXT_PUBLIC_WEB_APP_BASE_URL,
-                      })
-                    }
-                    className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  >
-                    Logout
+          <div
+            className={`z-10 mt-2 bg-white drop-shadow-2xl rounded divide-y w-44 transition
+              opacity-0 ${menuVisible && "opacity-100"}`}
+            onBlur={() => setMenuVisible(false)}
+          >
+            <ul className="py-1 text-sm">
+              <li>
+                <Link href="/my-communities">
+                  <a className="block px-4 py-2 hover:bg-gray-100">
+                    Comunităţile mele
                   </a>
-                </li>
-              </ul>
-            </div>
-          )}
+                </Link>
+              </li>
+              <li>
+                <a
+                  onClick={() =>
+                    logout({
+                      returnTo: process.env.NEXT_PUBLIC_WEB_APP_BASE_URL,
+                    })
+                  }
+                  className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       ) : (
         <button className="flex items-center gap-1" onClick={loginWithRedirect}>

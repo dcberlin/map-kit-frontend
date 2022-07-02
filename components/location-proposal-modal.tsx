@@ -236,13 +236,13 @@ export default function LocationProposalModal({ communityPk }) {
       <button
         type="button"
         onClick={openModal}
-        className="fixed h-12 bottom-[10%] w-12 h-12 bg-white right-0 z-30 rounded-l-full p-2 text-gray-600"
+        className="fixed h-12 bottom-[10%] w-12 h-12 bg-white right-0 rounded-l-full p-2 text-gray-600"
       >
         <PlusCircleIcon />
       </button>
 
       <div
-        className={`fixed inset-0 z-30 overflow-y-auto transition ${
+        className={`fixed inset-0 overflow-y-auto z-50 transition ${
           !isOpen && "translate-x-full"
         }`}
         onClose={closeModal}
