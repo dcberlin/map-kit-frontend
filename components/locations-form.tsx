@@ -12,33 +12,28 @@ import {
 
 import ErrorScreen from "../components/error-screen";
 import LoadingScreen from "../components/loading-screen";
+import { URLS } from "../api";
 
 export default function LocationsForm({ communityPk }) {
   const [locations, setLocations] = React.useState(null);
   const [user, setUser] = React.useState(null);
   const { getAccessTokenSilently } = useAuth0();
 
-  const { userError } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/`,
-    async (url) => {
-      const token = await getAccessTokenSilently();
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        const body = await res.json();
-        setUser(body);
-      }
+  const { userError } = useSWR(URLS.USER, async (url) => {
+    const token = await getAccessTokenSilently();
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (res.status === 200) {
+      const body = await res.json();
+      setUser(body);
     }
-  );
+  });
   const { locError } = useSWR(
     communityPk && user?.approved
-      ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/locations-admin/?community=${communityPk}`
+      ? `${URLS.LOCATIONS_ADMIN}/?community=${communityPk}`
       : null,
     async (url) => {
       const token = await getAccessTokenSilently();

@@ -14,7 +14,7 @@ import LoadingScreen from "../../components/loading-screen";
 /**
  * Page for submitting a new community proposal.
  */
-export default function CommunityMap({ communityId }) {
+export default function CommunityCreateProposal({ communityId }) {
   const [community, setCommunity] = React.useState(null);
   const [requestFailed, setRequestFailed] = React.useState(false);
   const { getAccessTokenSilently } = useAuth0();

@@ -12,6 +12,7 @@ import LocationProposalModal from "../components/location-proposal-modal";
 import ErrorScreen from "../components/error-screen";
 import { useDebounce } from "../hooks";
 import { usePois, useSelectedCategory, useSearchPhrase } from "../context";
+import { URLS } from "../api";
 
 /**
  * Public community map page.
@@ -23,9 +24,7 @@ export default function CommunityMap({ community, categories }) {
   const debouncedSearchPhrase = useDebounce(searchPhrase, 500);
 
   const { error } = useSWR(
-    `${
-      process.env.NEXT_PUBLIC_API_BASE_URL
-    }/api/locations/?community__path_slug=${community.path_slug}&category=${
+    `${URLS.LOCATIONS}?community__path_slug=${community.path_slug}&category=${
       selectedCategory?.pk ?? ""
     }&search=${debouncedSearchPhrase ?? ""}`,
     async (url) => {

@@ -15,11 +15,12 @@ import {
 import ErrorScreen from "../../components/error-screen";
 import AuthWidget from "../../components/auth-widget";
 import LoadingScreen from "../../components/loading-screen";
+import { URLS } from "../../api";
 
 /**
  * Overview page of all communites managed bu the the authenticated user.
  */
-export default function Communities() {
+export default function MyCommunities() {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
     useAuth0();
   const yesIcon = <CheckCircleIcon className="w-5 h-5 text-green-400" />;
@@ -27,7 +28,7 @@ export default function Communities() {
   const router = useRouter();
 
   const { data, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/communities-admin/`,
+    URLS.COMMUNITIES_ADMIN,
     async (url) => {
       const token = await getAccessTokenSilently();
       const res = await fetch(url, {

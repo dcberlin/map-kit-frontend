@@ -15,46 +15,40 @@ import CommunityForm from "../../components/community-form";
 import LocationsForm from "../../components/locations-form";
 import ErrorScreen from "../../components/error-screen";
 import LoadingScreen from "../../components/loading-screen";
+import { URLS } from "../../api";
 
 /*
- * Detail page of one community managed bu the the authenticated user.
+ * Detail page of one community managed by the the authenticated user.
  */
-export default function MyCommunity() {
+export default function MyCommunityEditDetail() {
   const [community, setCommunity] = React.useState(null);
   const router = useRouter();
-  const { id } = router.query;
+  const { id: communityPk } = router.query;
   const { getAccessTokenSilently } = useAuth0();
   const [requestFailed, setRequestFailed] = React.useState(false);
+  const DETAIL_URL = `${URLS.COMMUNITIES_ADMIN}/${communityPk}`;
 
-  const { error } = useSWR(
-    id
-      ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/communities-admin/${id}/`
-      : null,
-    async (url) => {
-      const token = await getAccessTokenSilently();
-      const res = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const response = await res.json();
-      setCommunity(response);
-    }
-  );
+  const { error } = useSWR(communityPk ? DETAIL_URL : null, async (url) => {
+    const token = await getAccessTokenSilently();
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const response = await res.json();
+    setCommunity(response);
+  });
 
   async function handleSubmit(values) {
     const token = await getAccessTokenSilently();
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/communities-admin/${id}/`,
-      {
-        method: "PUT",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ).then((response) => {
+    fetch(DETAIL_URL, {
+      method: "PUT",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
       if (response.status !== 200) {
         setRequestFailed(true);
       } else {
