@@ -37,12 +37,15 @@ function AuthWidget() {
               {setShowFallbackIcon ? (
                 <UserCircleIcon />
               ) : (
-                <img
-                  alt="The profile image from your social account you logged in with (Google etc.)"
-                  className="rounded-full"
-                  src={user.picture}
-                  onError={() => setShowFallbackIcon(true)}
-                />
+                <picture>
+                  <source srcSet={user.picture} type="image/jpeg" />
+                  <img
+                    alt="The profile image from your social account you logged in with (Google etc.)"
+                    className="rounded-full"
+                    src={user.picture}
+                    onError={() => setShowFallbackIcon(true)}
+                  />
+                </picture>
               )}
             </button>
           </div>

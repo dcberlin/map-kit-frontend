@@ -1,6 +1,6 @@
 import React from "react";
-import { useRouter } from "next/router";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
 import FilterDrawer from "../components/filter-drawer";
 import ListDrawer from "../components/list-drawer";
@@ -9,17 +9,20 @@ import MapHeader from "../components/map-header";
 import PoiDrawer from "../components/poi-drawer";
 import SearchDrawer from "../components/search-drawer";
 import LocationProposalModal from "../components/location-proposal-modal";
-import { usePois, useSelectedCategory, useSearchPhrase } from "../context";
-import { useDebounce } from "../hooks";
 import ErrorScreen from "../components/error-screen";
+import { useDebounce } from "../hooks";
+import { usePois, useSelectedCategory, useSearchPhrase } from "../context";
 
+/**
+ * Public community map page.
+ */
 export default function CommunityMap({ community, categories }) {
   const [pois, setPois] = usePois();
   const [selectedCategory, setSelectedCategory] = useSelectedCategory();
   const [searchPhrase, setSearchPhrase] = useSearchPhrase();
   const debouncedSearchPhrase = useDebounce(searchPhrase, 500);
 
-  const { locations, error } = useSWR(
+  const { error } = useSWR(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL
     }/api/locations/?community__path_slug=${community.path_slug}&category=${

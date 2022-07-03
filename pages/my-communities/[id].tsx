@@ -16,6 +16,9 @@ import LocationsForm from "../../components/locations-form";
 import ErrorScreen from "../../components/error-screen";
 import LoadingScreen from "../../components/loading-screen";
 
+/*
+ * Detail page of one community managed bu the the authenticated user.
+ */
 export default function MyCommunity() {
   const [community, setCommunity] = React.useState(null);
   const router = useRouter();

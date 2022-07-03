@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   ArrowLeftIcon,
@@ -16,6 +16,9 @@ import ErrorScreen from "../../components/error-screen";
 import AuthWidget from "../../components/auth-widget";
 import LoadingScreen from "../../components/loading-screen";
 
+/**
+ * Overview page of all communites managed bu the the authenticated user.
+ */
 export default function Communities() {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
     useAuth0();

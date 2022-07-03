@@ -78,7 +78,7 @@ export function useSearchPhrase() {
 }
 
 export function SearchPhraseProvider(props) {
-  const [searchPhrase, setSearchPhrase] = React.useState(null);
+  const [searchPhrase, setSearchPhrase] = React.useState("");
   return (
     <SearchPhrase.Provider value={[searchPhrase, setSearchPhrase]} {...props} />
   );

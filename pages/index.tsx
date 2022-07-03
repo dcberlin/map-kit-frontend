@@ -7,6 +7,9 @@ import { PlusIcon } from "@heroicons/react/solid";
 import ErrorScreen from "../components/error-screen";
 import AuthWidget from "../components/auth-widget";
 
+/**
+ * Landing page with an overview of all published communities.
+ */
 export default function Communities() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 

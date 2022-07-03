@@ -1,16 +1,19 @@
 import React from "react";
-import { useRouter } from "next/router";
 import useSWR from "swr";
+import Map from "react-map-gl";
+import { useRouter } from "next/router";
 import { ArrowLeftIcon, GlobeIcon } from "@heroicons/react/solid";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Formik, Field, Form } from "formik";
 import { WebMercatorViewport } from "@math.gl/web-mercator";
-import Map from "react-map-gl";
 
 import AuthWidget from "../../components/auth-widget";
 import CommunityForm from "../../components/community-form";
 import LoadingScreen from "../../components/loading-screen";
 
+/**
+ * Page for submitting a new community proposal.
+ */
 export default function CommunityMap({ communityId }) {
   const [community, setCommunity] = React.useState(null);
   const [requestFailed, setRequestFailed] = React.useState(false);

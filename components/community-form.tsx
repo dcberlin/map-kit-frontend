@@ -99,21 +99,22 @@ export default function CommunityForm({
               placeholder='de ex. "Comunitatea diasporei române din regiunea X"'
             />
           </div>
-          <div className="flex items-center justify-around gap-3 py-10">
+          <div className="flex flex-col items-center justify-around gap-3 py-10">
             <label
               className="block text-gray-700 text-sm mb-2 font-semibold"
               htmlFor="bbox"
             >
               Cadrul geografic al hărţii
             </label>
-            <div className="rounded-xl drop-shadow-xl">
+            <div className="flex items-center justify-center rounded-xl drop-shadow-xl h-full w-full">
               {!mapEditable && (
                 <div
-                  className="absolute bg-black opacity-40 h-full w-full z-10 cursor-pointer"
+                  className="absolute bg-black opacity-30 w-[100vh] h-[60vh] z-10 cursor-pointer"
                   onClick={() => setMapEditable(true)}
                 >
-                  <div className="flex h-full w-full items-center justify-center">
-                    <PencilAltIcon className="text-white h-12 w-12" />
+                  <div className="flex h-full w-full items-center justify-center text-white font-bold text-lg">
+                    <PencilAltIcon className="h-8 w-8" />
+                    Click aici pentru a edita cadrul
                   </div>
                 </div>
               )}
@@ -122,21 +123,25 @@ export default function CommunityForm({
                 initialViewState={{
                   bounds: initialValues.bbox,
                 }}
-                style={{ width: "100vh", height: "60vh" }}
+                style={{
+                  position: "relative",
+                  width: "100vh",
+                  height: "60vh",
+                }}
                 mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
                 mapStyle="mapbox://styles/03b8/ckvzmtn0k14xr14n7vg8aqske"
                 onMoveEnd={(e) => {
-                  const viewport = new WebMercatorViewport({
-                    width: 800,
-                    height: 600,
-                    longitude: e.viewState.longitude,
-                    latitude: e.viewState.latitude,
-                    zoom: e.viewState.zoom,
-                    pitch: e.viewState.pitch,
-                    bearing: e.viewState.bearing,
-                  });
-                  const bounds = viewport.getBounds();
-                  setFieldValue("bbox", [...bounds[0], ...bounds[1]]);
+                  if (setMapEditable) {
+                    const viewport = new WebMercatorViewport({
+                      longitude: e.viewState.longitude,
+                      latitude: e.viewState.latitude,
+                      zoom: e.viewState.zoom,
+                      pitch: e.viewState.pitch,
+                      bearing: e.viewState.bearing,
+                    });
+                    const bounds = viewport.getBounds();
+                    setFieldValue("bbox", [...bounds[0], ...bounds[1]]);
+                  }
                 }}
               />
             </div>
