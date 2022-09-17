@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
-import { PlusIcon } from "@heroicons/react/solid";
+import { PlusCircleIcon } from "@heroicons/react/outline";
 
 import AuthWidget from "../components/auth-widget";
 import ErrorScreen from "../components/error-screen";
@@ -13,7 +13,7 @@ import { URLS } from "../api";
  * Landing page with an overview of all published communities.
  */
 export default function LandingPage() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
 
   const { data, error } = useSWR(URLS.COMMUNITIES, async (url) => {
     const res = await fetch(url);
@@ -28,26 +28,43 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-gray-200">
+    <div className="flex flex-col h-screen w-screen bg-gray-200">
       <AuthWidget />
-      <div
-        className={`flex flex-wrap w-2/3 gap-4 p-4 place-content-start drop-shadow-2xl
-        rounded-xl bg-white`}
-      >
-        {data.map((community, index) => {
-          return (
-            <Link key={index} href={`/${community.path_slug}`}>
-              <a
-                className={`flex justify-center items-center w-80 h-48 bg-gradient-to-r
-                from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
-              >
-                <h2 className="text-4xl text-white font-bold">
-                  {community.name}
-                </h2>
-              </a>
-            </Link>
-          );
-        })}
+      <div className="flex flex-col h-2/5 gap-5 w-full items-center justify-center">
+        <label className="text-red-600 px-4 pb-2 pt-1 rounded-3xl font-bold border-2 border-red-600">prototip</label>
+        <h1 className="text-5xl font-bold">Harta Diasporei</h1>
+        <h4 className="text-3xl">Kit de dezvoltare pentru harta comunității românești din orașul tău</h4>
+      </div>
+      <div className="flex flex-col w-full items-center justify-center">
+        <div
+          className={`flex flex-wrap w-2/3 gap-4 p-4 place-content-start drop-shadow-2xl
+          rounded-xl bg-white`}
+        >
+          {data.map((community, index) => {
+            return (
+              <Link key={index} href={`/${community.path_slug}`}>
+                <a
+                  className={`flex justify-center items-center w-80 h-48 bg-gradient-to-r
+                  from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
+                >
+                  <h2 className="text-4xl text-white font-bold">
+                    {community.name}
+                  </h2>
+                </a>
+              </Link>
+            );
+          })}
+          <a
+            className={`flex flex-col gap-2 justify-center items-center w-80 h-48 bg-gradient-to-r
+            from-gray-500 to-purple-500 rounded-lg hover:hue-rotate-60 p-7 text-center cursor-pointer`}
+            onClick={() => loginWithRedirect({redirectUri: `${window.location.origin}/my-communities/create`})}
+          >
+            <PlusCircleIcon className="h-10 w-10 text-white"/>
+            <h2 className="text-2xl text-white font-bold">
+              Propune o comunitate nouă!
+            </h2>
+          </a>
+        </div>
       </div>
     </div>
   );
