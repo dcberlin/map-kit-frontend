@@ -28,12 +28,12 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-gray-200">
+    <div className="flex flex-col w-screen min-h-screen bg-gray-200 pb-10">
       <AuthWidget />
-      <div className="flex flex-col h-2/5 gap-5 w-full items-center justify-center">
-        <label className="text-red-600 px-4 pb-2 pt-1 rounded-3xl font-bold border-2 border-red-600">prototip</label>
-        <h1 className="text-5xl font-bold">Harta Diasporei</h1>
-        <h4 className="text-3xl">Kit de dezvoltare pentru harta comunității românești din orașul tău</h4>
+      <div className="flex flex-col h-2/5 gap-5 p-8 mt-3 items-center justify-center">
+        <label className="text-red-600 px-4 pb-2 pt-1 mt-4 rounded-3xl font-bold border-2 border-red-600">prototip</label>
+        <h1 className="text-4xl md:text-5xl font-bold text-center">Harta Diasporei</h1>
+        <h4 className="text-xl md:text-2xl text-center">Kit de dezvoltare pentru harta comunității românești din orașul tău</h4>
       </div>
       <div className="flex flex-col w-full items-center justify-center">
         <div
@@ -44,7 +44,7 @@ export default function LandingPage() {
             return (
               <Link key={index} href={`/${community.path_slug}`}>
                 <a
-                  className={`flex justify-center items-center w-80 h-48 bg-gradient-to-r
+                  className={`flex justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
                   from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
                 >
                   <h2 className="text-4xl text-white font-bold">

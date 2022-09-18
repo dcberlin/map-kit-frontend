@@ -25,14 +25,17 @@ function AuthWidget() {
   });
 
   return (
-    <div className="fixed right-0 top-5 z-20">
+    <div className="fixed right-5 top-5 z-20">
       {isAuthenticated ? (
-        <div ref={ref} className="flex flex-col items-center bg-white h-10 pl-2 rounded-l-xl drop-shadow-2xl">
+        <div
+          ref={ref}
+          className="flex flex-col items-center bg-white w-44 h-10 pl-4 rounded-3xl drop-shadow-2xl cursor-pointer"
+          onClick={() => setMenuVisible(!menuVisible)}
+        >
           <div className="flex gap-3 items-center justify-end">
-            <span className="text-md">Salut, {user.given_name}! </span>
+            <span className="text-md font-bold text-gray-700">Salut, {user.given_name}! </span>
             <button
               className="h-10 w-10 text-green-600"
-              onClick={() => setMenuVisible(!menuVisible)}
             >
               {setShowFallbackIcon ? (
                 <UserCircleIcon />
@@ -49,37 +52,40 @@ function AuthWidget() {
               )}
             </button>
           </div>
-          <div
-            className={`z-10 mt-2 bg-white drop-shadow-2xl rounded divide-y w-44 transition
-              opacity-0 ${menuVisible && "opacity-100"}`}
-            onBlur={() => setMenuVisible(false)}
-          >
-            <ul className="py-1 text-md">
-              <li>
-                <Link href="/my-communities">
-                  <a className="block px-4 py-2 hover:bg-gray-100">
-                    Comunităţile mele
+          {
+            menuVisible &&
+            <div
+              className={`z-10 mt-2 bg-white drop-shadow-2xl rounded divide-y w-44 transition
+                opacity-0 ${menuVisible && "opacity-100"}`}
+              onBlur={() => setMenuVisible(false)}
+            >
+              <ul className="py-1 text-md">
+                <li>
+                  <Link href="/my-communities">
+                    <a className="block px-4 py-2 hover:bg-gray-100">
+                      Comunităţile mele
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    onClick={() =>
+                      logout({
+                        returnTo: process.env.NEXT_PUBLIC_WEB_APP_BASE_URL,
+                      })
+                    }
+                    className="block px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-800"
+                  >
+                    Logout
                   </a>
-                </Link>
-              </li>
-              <li>
-                <a
-                  onClick={() =>
-                    logout({
-                      returnTo: process.env.NEXT_PUBLIC_WEB_APP_BASE_URL,
-                    })
-                  }
-                  className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                >
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </div>
+                </li>
+              </ul>
+            </div>
+          }
         </div>
       ) : (
-        <button className="flex items-center gap-1 mr-3" onClick={loginWithRedirect}>
-          <span className="text-md">Login</span>
+        <button className="flex items-center gap-1 mr-3 bg-white pl-4 pr-1 rounded-3xl drop-shadow-2xl" onClick={loginWithRedirect}>
+          <span className="text-md font-bold text-gray-600">Login</span>
           <UserCircleIcon className="h-10 w-10 text-gray-400" />
         </button>
       )}
