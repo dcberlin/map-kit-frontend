@@ -56,9 +56,11 @@ export default function MyCommunities() {
 
       <div className="flex flex-col h-2/3 w-2/3 gap-6 p-6 justify-between bg-white rounded-xl overflow-auto drop-shadow-2xl">
         <div className="flex w-full justify-end">
-          <button onClick={() => router.back()}>
-            <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
-          </button>
+          <Link href="/">
+            <button>
+              <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
+            </button>
+          </Link>
         </div>
         <h1 className="font-bold text-gray-600 mb-4">Comunităţile mele</h1>
         <table className="table-auto min-w-full">
