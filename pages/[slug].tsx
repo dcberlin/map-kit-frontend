@@ -71,6 +71,12 @@ export async function getStaticProps({ params }) {
   );
   const [community] = await comRes.json();
 
+  if (!community) {
+    return {
+      notFound: true,
+    }
+  }
+
   return {
     props: {
       community,
