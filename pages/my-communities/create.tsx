@@ -2,6 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import Map from "react-map-gl";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { ArrowLeftIcon, GlobeIcon } from "@heroicons/react/solid";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Formik, Field, Form } from "formik";
@@ -66,9 +67,11 @@ export default function CommunityCreateProposal({ communityId }) {
       <div className="flex w-screen items-center justify-center bg-gray-200">
         <div className="flex flex-col mt-20 mb-20 h-2/3 w-2/3 gap-6 px-20 py-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
           <div className="flex w-full justify-end">
-            <button onClick={() => router.back()}>
-              <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
-            </button>
+            <Link href="/my-communities">
+              <button>
+                <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
+              </button>
+            </Link>
           </div>
           <h1 className="font-bold text-gray-600">Propune o comunitate nouă</h1>
           <div className="">
