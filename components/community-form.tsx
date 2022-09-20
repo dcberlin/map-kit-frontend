@@ -136,8 +136,8 @@ export default function CommunityForm({
                       longitude: e.viewState.longitude,
                       latitude: e.viewState.latitude,
                       zoom: e.viewState.zoom,
-                      pitch: e.viewState.pitch,
-                      bearing: e.viewState.bearing,
+                      width: e.originalEvent.clientX,
+                      height: e.originalEvent.clientY,
                     });
                     const bounds = viewport.getBounds();
                     setFieldValue("bbox", [...bounds[0], ...bounds[1]]);
