@@ -44,7 +44,7 @@ export default function LandingPage() {
             return (
               <Link key={index} href={`/${community.path_slug}`}>
                 <a
-                  className={`flex justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
+                  className={`flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
                   from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
                 >
                   <h2 className="text-4xl text-white font-bold">
@@ -55,7 +55,7 @@ export default function LandingPage() {
             );
           })}
           <a
-            className={`flex flex-col gap-2 justify-center items-center w-80 h-48 bg-gradient-to-r
+            className={`flex grow flex-col gap-2 justify-center items-center max-w-max h-48 bg-gradient-to-r
             from-gray-500 to-purple-500 rounded-lg hover:hue-rotate-60 p-7 text-center cursor-pointer`}
             onClick={() => loginWithRedirect({redirectUri: `${window.location.origin}/my-communities/create`})}
           >
