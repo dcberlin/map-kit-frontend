@@ -27,7 +27,7 @@ export default function MyCommunityEditDetail() {
   const { id: communityPk } = router.query;
   const { getAccessTokenSilently } = useAuth0();
   const [requestFailed, setRequestFailed] = React.useState(false);
-  const DETAIL_URL = `${URLS.COMMUNITIES_ADMIN}/${communityPk}`;
+  const DETAIL_URL = `${URLS.COMMUNITIES_ADMIN}/${communityPk}/`;
 
   const { error } = useSWR(communityPk ? DETAIL_URL : null, async (url) => {
     const token = await getAccessTokenSilently();
