@@ -35,7 +35,7 @@ export default function CommunityCreateProposal({ communityId }) {
       if (response.status !== 201) {
         setRequestFailed(true);
       } else {
-        router.back();
+        router.push("/my-communities");
       }
     });
   }
