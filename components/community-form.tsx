@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Field, Form } from "formik";
+import {Formik, Field, Form, FormikErrors} from "formik";
 import { WebMercatorViewport } from "@math.gl/web-mercator";
 import Map from "react-map-gl";
 import { PencilAltIcon } from "@heroicons/react/solid";
@@ -11,7 +11,7 @@ export default function CommunityForm({
 }) {
   const [mapEditable, setMapEditable] = React.useState(false);
   function validateForm(values, props) {
-    const errors = {};
+    const errors: FormikErrors<any> = {};
 
     if (!values.name) {
       errors.name = "Numele este câmp obligatoriu.";

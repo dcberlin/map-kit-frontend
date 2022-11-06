@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { ArrowLeftIcon, GlobeIcon } from "@heroicons/react/solid";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Formik, Field, Form } from "formik";
+import {Formik, Field, Form, FormikErrors} from "formik";
 import { WebMercatorViewport } from "@math.gl/web-mercator";
 
 import AuthWidget from "../../components/auth-widget";
@@ -41,7 +41,7 @@ export default function CommunityCreateProposal({ communityId }) {
   }
 
   function validateForm(values, props) {
-    const errors = {};
+    const errors: FormikErrors<any> = {};
 
     if (!values.name) {
       errors.name = "Numele este câmp obligatoriu.";

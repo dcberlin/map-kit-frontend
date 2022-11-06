@@ -2,7 +2,7 @@ import React from "react";
 
 /* Displayed POIs */
 
-const PoisContext = React.createContext();
+const PoisContext = React.createContext(null);
 
 export function usePois() {
   const context = React.useContext(PoisContext);
@@ -19,7 +19,7 @@ export function PoisProvider(props) {
 
 /* Selected POI */
 
-const SelectedPoiContext = React.createContext();
+const SelectedPoiContext = React.createContext(null);
 
 export function useSelectedPoi() {
   const context = React.useContext(SelectedPoiContext);
@@ -41,7 +41,7 @@ export function SelectedPoiProvider(props) {
 
 /* Selected category */
 
-const SelectedCategory = React.createContext();
+const SelectedCategory = React.createContext(null);
 
 export function useSelectedCategory() {
   const context = React.useContext(SelectedCategory);
@@ -65,7 +65,7 @@ export function SelectedCategoryProvider(props) {
 
 /* Search phrase */
 
-const SearchPhrase = React.createContext();
+const SearchPhrase = React.createContext(null);
 
 export function useSearchPhrase() {
   const context = React.useContext(SearchPhrase);
