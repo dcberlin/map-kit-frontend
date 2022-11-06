@@ -61,28 +61,26 @@ export default function CommunityCreateProposal({ communityId }) {
     return errors;
   }
 
-  return (
-    <>
-      <AuthWidget />
-      <div className="flex w-screen items-center justify-center bg-gray-200">
-        <div className="flex flex-col mt-20 mb-20 h-2/3 w-2/3 gap-6 px-20 py-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
-          <div className="flex w-full justify-end">
-            <Link href="/my-communities">
-              <button>
-                <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
-              </button>
-            </Link>
-          </div>
-          <h1 className="font-bold text-gray-600">Propune o comunitate nouă</h1>
-          <div className="">
-            <CommunityForm
-              initialValues={{ name: "", description: "", bbox: globalBbox }}
-              onSubmit={handleSubmit}
-              requestFailed={requestFailed}
-            />
-          </div>
+  return <>
+    <AuthWidget />
+    <div className="flex w-screen items-center justify-center bg-gray-200">
+      <div className="flex flex-col mt-20 mb-20 h-2/3 w-2/3 gap-6 px-20 py-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
+        <div className="flex w-full justify-end">
+          <Link href="/my-communities" legacyBehavior>
+            <button>
+              <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
+            </button>
+          </Link>
+        </div>
+        <h1 className="font-bold text-gray-600">Propune o comunitate nouă</h1>
+        <div className="">
+          <CommunityForm
+            initialValues={{ name: "", description: "", bbox: globalBbox }}
+            onSubmit={handleSubmit}
+            requestFailed={requestFailed}
+          />
         </div>
       </div>
-    </>
-  );
+    </div>
+  </>;
 }

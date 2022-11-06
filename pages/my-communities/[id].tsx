@@ -65,37 +65,35 @@ export default function MyCommunityEditDetail() {
   if (!community) {
     return <LoadingScreen />;
   }
-  return (
-    <>
-      <AuthWidget />
-      <div className="flex min-h-screen w-screen items-center justify-center bg-gray-200">
-        <div className="flex flex-col mt-20 mb-20 w-2/3 p-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
-          <div className="flex w-full justify-end">
-            <Link href="/my-communities">
-              <button onClick={() => router.back()}>
-                <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
-              </button>
-            </Link>
-          </div>
-          <h1 className="text-gray-600 mb-10">
-            Comunitatea <span className="font-bold">{community.name}</span>
-          </h1>
-          <div className="flex flex-col gap-7">
-            <CollapsibleSection title="Profil">
-              <CommunityForm
-                initialValues={community}
-                onSubmit={handleSubmit}
-                requestFailed={requestFailed}
-              />
-            </CollapsibleSection>
-            <CollapsibleSection title="Locaţii">
-              <LocationsForm communityPk={community.pk} />
-            </CollapsibleSection>
-          </div>
+  return <>
+    <AuthWidget />
+    <div className="flex min-h-screen w-screen items-center justify-center bg-gray-200">
+      <div className="flex flex-col mt-20 mb-20 w-2/3 p-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
+        <div className="flex w-full justify-end">
+          <Link href="/my-communities" legacyBehavior>
+            <button onClick={() => router.back()}>
+              <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
+            </button>
+          </Link>
+        </div>
+        <h1 className="text-gray-600 mb-10">
+          Comunitatea <span className="font-bold">{community.name}</span>
+        </h1>
+        <div className="flex flex-col gap-7">
+          <CollapsibleSection title="Profil">
+            <CommunityForm
+              initialValues={community}
+              onSubmit={handleSubmit}
+              requestFailed={requestFailed}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection title="Locaţii">
+            <LocationsForm communityPk={community.pk} />
+          </CollapsibleSection>
         </div>
       </div>
-    </>
-  );
+    </div>
+  </>;
 }
 
 function CollapsibleSection({

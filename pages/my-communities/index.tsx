@@ -56,7 +56,7 @@ export default function MyCommunities() {
 
       <div className="flex flex-col h-2/3 w-2/3 gap-6 p-6 justify-between bg-white rounded-xl overflow-auto drop-shadow-2xl">
         <div className="flex w-full justify-end">
-          <Link href="/">
+          <Link href="/" legacyBehavior>
             <button>
               <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
             </button>
@@ -84,7 +84,7 @@ export default function MyCommunities() {
                     {community.published ? yesIcon : noIcon}
                   </td>
                   <td className="p-4">
-                    <Link href={`/my-communities/${community.pk}`}>
+                    <Link href={`/my-communities/${community.pk}`} legacyBehavior>
                       <button className="flex h-full gap-3 items-center justify-end">
                         <PencilAltIcon className="w-6 h-6 text-blue-700" />
                       </button>
@@ -103,7 +103,7 @@ export default function MyCommunities() {
           </tbody>
         </table>
         <div className="flex flex-col justify-end flex-grow">
-          <Link href="/my-communities/create">
+          <Link href="/my-communities/create" legacyBehavior>
             <button className="inline-flex justify-center font-semibold px-4 py-2 text-sm font-medium text-gray-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500">
               Propune o comunitate nouă
             </button>

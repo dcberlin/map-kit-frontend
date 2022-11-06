@@ -61,11 +61,7 @@ function AuthWidget() {
             >
               <ul className="py-1 text-md">
                 <li>
-                  <Link href="/my-communities">
-                    <a className="block px-4 py-2 hover:bg-gray-100">
-                      Comunităţile mele
-                    </a>
-                  </Link>
+                  <Link href="/my-communities" className="block px-4 py-2 hover:bg-gray-100">Comunităţile mele</Link>
                 </li>
                 <li>
                   <a

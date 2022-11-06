@@ -42,16 +42,14 @@ export default function LandingPage() {
         >
           {data.map((community, index) => {
             return (
-              <Link key={index} href={`/${community.path_slug}`}>
-                <a
-                  className={`flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
-                  from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
-                >
-                  <h2 className="text-4xl text-white font-bold">
-                    {community.name}
-                  </h2>
-                </a>
-              </Link>
+              <Link
+                key={index}
+                href={`/${community.path_slug}`}
+                className={`flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
+                from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
+                legacyBehavior>
+                  <h2 className="text-4xl text-white font-bold">{community.name}</h2>
+                </Link>
             );
           })}
           <a
