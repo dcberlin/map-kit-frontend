@@ -1,4 +1,3 @@
-import {Url} from "url";
 import {LngLatBoundsLike} from "mapbox-gl";
 
 export interface Community {
@@ -14,10 +13,10 @@ export interface Community {
 export interface Location {
   pk: number;
   community: number;
-  category: number;
+  category: string; // slug
   name: string;
   address: string;
-  website: Url;
+  website: string;
   email: string;
   description: string;
   phone: string;

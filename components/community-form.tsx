@@ -38,6 +38,11 @@ export default function CommunityForm({onSubmit, initialValues, requestFailed}: 
     return errors;
   }
 
+  const publishToggle = (e) => {
+    e.preventDefault();
+    onSubmit({...initialValues, published: !initialValues.published});
+  };
+
   return <Formik initialValues={initialValues} onSubmit={onSubmit} validate={validateForm}>
     {({errors, touched, setFieldValue}) =>
       <Form className="mt-8">
@@ -137,15 +142,15 @@ export default function CommunityForm({onSubmit, initialValues, requestFailed}: 
         </div>
 
         <div className="flex mt-8 items-center justify-end">
-          <button
+          {initialValues.pk && <button
             type="button"
             className="inline-flex justify-center font-thin px-4 py-2 text-sm font-medium
             text-gray-900 border border-transparent rounded-md hover:bg-green-200 focus:outline-none
             focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500 mr-4"
-            onClick={() => router.back()}
+            onClick={publishToggle}
           >
-            Publică
-          </button>
+            {initialValues.published ? "Fă-o privată" : "Publică"}
+          </button>}
           <button
             type="submit"
             className="inline-flex justify-center px-10 py-3 text-end font-medium
