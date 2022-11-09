@@ -9,13 +9,23 @@ import ErrorScreen from "../components/error-screen";
 import LoadingScreen from "../components/loading-screen";
 import { URLS } from "../api";
 
+interface Community {
+  pk: number;
+  name: string;
+  description: string;
+  approved: boolean;
+  published: boolean;
+  bbox: number[];
+  path_slug: string;
+}
+
 /**
  * Landing page with an overview of all published communities.
  */
 export default function LandingPage() {
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
 
-  const { data, error } = useSWR(URLS.COMMUNITIES, async (url) => {
+  const { data, error } = useSWR<Community[], Error>(URLS.COMMUNITIES, async (url) => {
     const res = await fetch(url);
     return res.json();
   });
@@ -40,18 +50,15 @@ export default function LandingPage() {
           className={`flex flex-wrap w-2/3 gap-4 p-4 place-content-start drop-shadow-2xl
           rounded-xl bg-white`}
         >
-          {data.map((community, index) => {
-            return (
+          {data.map((community, index) =>
               <Link
-                key={index}
-                href={`/${community.path_slug}`}
-                className={`flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
-                from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
-                legacyBehavior>
-                  <h2 className="text-4xl text-white font-bold">{community.name}</h2>
-                </Link>
-            );
-          })}
+                  key={index}
+                  href={`/${community.path_slug}`}
+                  className={`flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
+                  from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
+                  legacyBehavior>
+                <h2 className="text-4xl text-white font-bold">{community.name}</h2>
+              </Link>)}
           <a
             className={`flex grow flex-col gap-2 justify-center items-center max-w-max h-48 bg-gradient-to-r
             from-gray-500 to-purple-500 rounded-lg hover:hue-rotate-60 p-7 text-center cursor-pointer`}
