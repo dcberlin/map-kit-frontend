@@ -5,10 +5,9 @@ import {useRouter} from "next/router";
 import {useAuth0} from "@auth0/auth0-react";
 import {
   ArrowLeftIcon,
-  CheckCircleIcon,
-  MapIcon,
+  CheckCircleIcon, DocumentRemoveIcon, ExternalLinkIcon,
   PencilAltIcon,
-  TrashIcon,
+  TrashIcon, ViewGridIcon,
   XCircleIcon,
 } from "@heroicons/react/solid";
 
@@ -67,13 +66,13 @@ export default function MyCommunities() {
             <th className="p-4 text-left">Nume</th>
             <th className="p-4 text-left">Aprobată</th>
             <th className="p-4 text-left">Publicată</th>
-            <th></th>
+            <th className="p-4 text-left">Acțiuni</th>
           </tr>
           </thead>
           <tbody>
           {data.map((community, index) =>
             <tr key={index} className="w-20 border-b">
-              <td className="p-4">{community.name}</td>
+              <td className="p-4"><Link href={`/my-communities/${community.pk}`}>{community.name}</Link></td>
               <td className="p-4">
                 {community.approved ? yesIcon : noIcon}
               </td>
@@ -81,9 +80,19 @@ export default function MyCommunities() {
                 {community.published ? yesIcon : noIcon}
               </td>
               <td className="p-4">
+                <Link href={`/${encodeURIComponent(community.path_slug)}`} legacyBehavior>
+                  <button className="h-full justify-end" title="vizitează">
+                    <ExternalLinkIcon className="w-6 h-6 text-blue-700"/>
+                  </button>
+                </Link>
                 <Link href={`/my-communities/${community.pk}`} legacyBehavior>
-                  <button className="flex h-full gap-3 items-center justify-end">
+                  <button className="h-full justify-end" title="editează">
                     <PencilAltIcon className="w-6 h-6 text-blue-700"/>
+                  </button>
+                </Link>
+                <Link href={`/my-communities/${community.pk}/delete`} legacyBehavior>
+                  <button className="h-full justify-end" title="șterge">
+                    <DocumentRemoveIcon className="w-6 h-6 text-red-700"/>
                   </button>
                 </Link>
               </td>
