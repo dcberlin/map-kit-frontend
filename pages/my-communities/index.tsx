@@ -1,15 +1,11 @@
 import React, {useState} from "react";
 import Link from "next/link";
 import useSWR from "swr";
-import useSWRMutation from "swr/mutation";
-import {useRouter} from "next/router";
 import {useAuth0} from "@auth0/auth0-react";
 import {
   ArrowLeftIcon,
-  CheckCircleIcon, DocumentRemoveIcon, ExternalLinkIcon,
+  DocumentRemoveIcon, ExternalLinkIcon,
   PencilAltIcon,
-  TrashIcon, ViewGridIcon,
-  XCircleIcon,
 } from "@heroicons/react/solid";
 
 import ErrorScreen from "../../components/error-screen";
@@ -17,51 +13,14 @@ import AuthWidget from "../../components/auth-widget";
 import LoadingScreen from "../../components/loading-screen";
 import {URLS} from "../../api";
 import {Community} from "../../models/community";
-
-interface BoolAttributeProps {
-  value: boolean;
-  edit?: {
-    pk: number;
-    propertyName: string;
-    getAccessTokenSilently: () => Promise<string>;
-  };
-}
-
-// BoolAttribute displays a boolean attribute of a community (as a yes/no icon).
-// Or, if the edit part is provided, it will make the icon clickable (so the user can change the value).
-function BoolAttribute({value, edit}: BoolAttributeProps) {
-  const icon = value ?
-    <CheckCircleIcon className="w-5 h-5 text-green-400"/> :
-    <XCircleIcon className="w-5 h-5 text-red-400"/>;
-  if (!edit) {
-    return icon;
-  }
-
-  const {trigger} = useSWRMutation(
-    `${URLS.COMMUNITIES_ADMIN}/${edit.pk}/`,
-    async (url, {arg}) => {
-      const token = await edit.getAccessTokenSilently();
-      return fetch(url, {
-        method: 'PATCH',
-        body: JSON.stringify(arg),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-    },
-  );
-
-  return <button
-    onClick={() => trigger({[edit.propertyName]: !value})}
-    title={value?"dezactivează":"activează"}
-  >{icon}</button>;
-}
+import BoolAttribute from "../../components/bool-attr";
 
 /**
  * Overview page of all communities managed by the authenticated user.
  */
 export default function MyCommunities() {
+  const [communities, setCommunities] = useState<Community[]>([]);
+
   const {getAccessTokenSilently} = useAuth0();
 
   const {data, error} = useSWR<Community[]>(
@@ -69,7 +28,8 @@ export default function MyCommunities() {
     async (url) => {
       const token = await getAccessTokenSilently();
       const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-      return res.json();
+      setCommunities(await res.json());
+      return communities;
     },
     { revalidateOnMount: true }
   );
@@ -105,8 +65,8 @@ export default function MyCommunities() {
           </tr>
           </thead>
           <tbody>
-          {data.map((community, index) =>
-            <tr key={index} className="w-20 border-b">
+          {communities.map((community) =>
+            <tr key={community.pk} className="w-20 border-b">
               <td className="p-4">
                 <Link href={`/my-communities/${community.pk}`} legacyBehavior>
                   {community.name}
@@ -141,7 +101,7 @@ export default function MyCommunities() {
               </td>
             </tr>
           )}
-          {data.length === 0 && (
+          {communities.length === 0 && (
             <tr>
               <td className="p-4 text-gray-500">
                 Nu administrezi nicio comunitate momentan.
