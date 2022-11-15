@@ -25,20 +25,18 @@ export default function MyCommunityEditDetail() {
   const [community, setCommunity] = React.useState(null);
   const router = useRouter();
   const { id: communityPk } = router.query;
-  const { getAccessTokenSilently } = useAuth0();
   const [requestFailed, setRequestFailed] = React.useState(false);
+  const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const DETAIL_URL = `${URLS.COMMUNITIES_ADMIN}/${communityPk}/`;
 
-  const { error } = useSWR(communityPk ? DETAIL_URL : null, async (url) => {
-    const token = await getAccessTokenSilently();
-    const res = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const {error} = useSWR(
+    communityPk ? DETAIL_URL : null,
+    async (url) => {
+      const token = await getAccessTokenSilently();
+      const res = await fetch(url, {headers: {Authorization: `Bearer ${token}`}});
+      const response = await res.json();
+      setCommunity(response);
     });
-    const response = await res.json();
-    setCommunity(response);
-  });
 
   async function handleSubmit(values) {
     const token = await getAccessTokenSilently();
@@ -80,14 +78,14 @@ export default function MyCommunityEditDetail() {
           Comunitatea <span className="font-bold">{community.name}</span>
         </h1>
         <div className="flex flex-col gap-7">
-          <CollapsibleSection title="Profil">
+          <CollapsibleSection title="Profil" collapsed={false}>
             <CommunityForm
               initialValues={community}
               onSubmit={handleSubmit}
               requestFailed={requestFailed}
             />
           </CollapsibleSection>
-          <CollapsibleSection title="Locaţii">
+          <CollapsibleSection title="Locaţii" collapsed={false}>
             <LocationsForm communityPk={community.pk} />
           </CollapsibleSection>
         </div>

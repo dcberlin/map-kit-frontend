@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Link from "next/link";
 import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 import {useRouter} from "next/router";
 import {useAuth0} from "@auth0/auth0-react";
 import {
@@ -15,25 +16,59 @@ import ErrorScreen from "../../components/error-screen";
 import AuthWidget from "../../components/auth-widget";
 import LoadingScreen from "../../components/loading-screen";
 import {URLS} from "../../api";
+import {Community} from "../../models/community";
+
+interface BoolAttributeProps {
+  value: boolean;
+  edit?: {
+    pk: number;
+    propertyName: string;
+    getAccessTokenSilently: () => Promise<string>;
+  };
+}
+
+// BoolAttribute displays a boolean attribute of a community (as a yes/no icon).
+// Or, if the edit part is provided, it will make the icon clickable (so the user can change the value).
+function BoolAttribute({value, edit}: BoolAttributeProps) {
+  const icon = value ?
+    <CheckCircleIcon className="w-5 h-5 text-green-400"/> :
+    <XCircleIcon className="w-5 h-5 text-red-400"/>;
+  if (!edit) {
+    return icon;
+  }
+
+  const {trigger} = useSWRMutation(
+    `${URLS.COMMUNITIES_ADMIN}/${edit.pk}/`,
+    async (url, {arg}) => {
+      const token = await edit.getAccessTokenSilently();
+      return fetch(url, {
+        method: 'PATCH',
+        body: JSON.stringify(arg),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    },
+  );
+
+  return <button
+    onClick={() => trigger({[edit.propertyName]: !value})}
+    title={value?"dezactivează":"activează"}
+  >{icon}</button>;
+}
 
 /**
  * Overview page of all communities managed by the authenticated user.
  */
 export default function MyCommunities() {
-  const {user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
-  const yesIcon = <CheckCircleIcon className="w-5 h-5 text-green-400"/>;
-  const noIcon = <XCircleIcon className="w-5 h-5 text-red-400"/>;
-  const router = useRouter();
+  const {getAccessTokenSilently} = useAuth0();
 
-  const {data, error} = useSWR(
+  const {data, error} = useSWR<Community[]>(
     URLS.COMMUNITIES_ADMIN,
     async (url) => {
       const token = await getAccessTokenSilently();
-      const res = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
       return res.json();
     },
     { revalidateOnMount: true }
@@ -72,12 +107,20 @@ export default function MyCommunities() {
           <tbody>
           {data.map((community, index) =>
             <tr key={index} className="w-20 border-b">
-              <td className="p-4"><Link href={`/my-communities/${community.pk}`}>{community.name}</Link></td>
               <td className="p-4">
-                {community.approved ? yesIcon : noIcon}
+                <Link href={`/my-communities/${community.pk}`} legacyBehavior>
+                  {community.name}
+                </Link>
               </td>
               <td className="p-4">
-                {community.published ? yesIcon : noIcon}
+                <BoolAttribute value={community.approved} />
+              </td>
+              <td className="p-4">
+                <BoolAttribute value={community.published} edit={{
+                  propertyName: 'published',
+                  pk: community.pk,
+                  getAccessTokenSilently,
+                }} />
               </td>
               <td className="p-4">
                 <Link href={`/${encodeURIComponent(community.path_slug)}`} legacyBehavior>

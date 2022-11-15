@@ -8,16 +8,7 @@ import AuthWidget from "../components/auth-widget";
 import ErrorScreen from "../components/error-screen";
 import LoadingScreen from "../components/loading-screen";
 import { URLS } from "../api";
-
-interface Community {
-  pk: number;
-  name: string;
-  description: string;
-  approved: boolean;
-  published: boolean;
-  bbox: number[];
-  path_slug: string;
-}
+import {Community} from "../models/community";
 
 /**
  * Landing page with an overview of all published communities.
@@ -41,7 +32,10 @@ export default function LandingPage() {
     <div className="flex flex-col w-screen min-h-screen bg-gray-200 pb-10">
       <AuthWidget />
       <div className="flex flex-col h-2/5 gap-5 p-8 mt-3 items-center justify-center">
-        <label className="text-red-600 px-4 pb-2 pt-1 mt-4 rounded-3xl font-bold border-2 border-red-600">prototip</label>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <h1 className="text-4xl md:text-5xl font-bold text-center">Harta Diasporei</h1>
         <h4 className="text-xl md:text-2xl text-center">Kit de dezvoltare pentru harta comunității românești din orașul tău</h4>
       </div>
@@ -57,10 +51,11 @@ export default function LandingPage() {
                   className={`flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
                   from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
                   legacyBehavior>
-                <h2 className="text-4xl text-white font-bold">{community.name}</h2>
+                <h2 className="flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
+                  from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60 text-white cursor-pointer">{community.name}</h2>
               </Link>)}
           <a
-            className={`flex grow flex-col gap-2 justify-center items-center max-w-max h-48 bg-gradient-to-r
+            className={`flex flex-col gap-2 justify-center items-center max-w-max h-48 bg-gradient-to-r
             from-gray-500 to-purple-500 rounded-lg hover:hue-rotate-60 p-7 text-center cursor-pointer`}
             onClick={() => loginWithRedirect({redirectUri: `${window.location.origin}/my-communities/create`})}
           >

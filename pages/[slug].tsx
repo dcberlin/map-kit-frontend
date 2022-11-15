@@ -13,6 +13,7 @@ import ErrorScreen from "../components/error-screen";
 import { useDebounce } from "../hooks";
 import { usePois, useSelectedCategory, useSearchPhrase } from "../context";
 import { URLS } from "../api";
+import {GetStaticPaths, GetStaticProps} from "next";
 
 /**
  * Public community map page.
@@ -46,7 +47,7 @@ export default function CommunityMap({ community, categories }) {
       <div className="fixed right-0 bottom-1/3 z-20">
         <div className="flex flex-col gap-2">
           <FilterDrawer categories={categories} />
-          <SearchDrawer />
+          <SearchDrawer locations={undefined} bbox={undefined}  />
           <ListDrawer />
           <LocationProposalModal communityPk={community.pk} />
         </div>
@@ -60,7 +61,7 @@ export default function CommunityMap({ community, categories }) {
   );
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const catRes = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories/`
   );
@@ -86,7 +87,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/communities`
   );

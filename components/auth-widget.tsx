@@ -4,8 +4,7 @@ import { UserCircleIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 
 function AuthWidget() {
-  const { user, isAuthenticated, isLoading, logout, loginWithRedirect } =
-    useAuth0();
+  const { user, isAuthenticated, isLoading, logout, loginWithRedirect } = useAuth0();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const ref = React.useRef(null);
   const [showFallbackIcon, setShowFallbackIcon] = React.useState(false);
