@@ -99,6 +99,21 @@ export default function CommunityForm({
               placeholder='de ex. "Comunitatea diasporei române din regiunea X"'
             />
           </div>
+          <div className="mb-2 pb-4">
+            <label
+              className="block text-gray-700 text-sm mb-2 font-semibold"
+              htmlFor="published"
+            >
+              Publicată
+            </label>
+            <Field
+              type="checkbox"
+              name="published"
+              value={initialValues.published}
+              id="published"
+              className="shadow border"
+            />
+          </div>
           <div className="flex flex-col items-center justify-around gap-3 py-10">
             <label
               className="block text-gray-700 text-sm mb-2 font-semibold"
