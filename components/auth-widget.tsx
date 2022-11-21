@@ -4,8 +4,7 @@ import { UserCircleIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 
 function AuthWidget() {
-  const { user, isAuthenticated, isLoading, logout, loginWithRedirect } =
-    useAuth0();
+  const { user, isAuthenticated, isLoading, logout, loginWithRedirect } = useAuth0();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const ref = React.useRef(null);
   const [showFallbackIcon, setShowFallbackIcon] = React.useState(false);
@@ -61,11 +60,7 @@ function AuthWidget() {
             >
               <ul className="py-1 text-md">
                 <li>
-                  <Link href="/my-communities">
-                    <a className="block px-4 py-2 hover:bg-gray-100">
-                      Comunităţile mele
-                    </a>
-                  </Link>
+                  <Link href="/my-communities" className="block px-4 py-2 hover:bg-gray-100">Comunităţile mele</Link>
                 </li>
                 <li>
                   <a
