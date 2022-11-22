@@ -23,7 +23,7 @@ export default function CommunityMap({community, categories}) {
   const debouncedSearchPhrase = useDebounce(searchPhrase, 500);
 
   const {error} = useSWR(
-    `${URLS.LOCATIONS}/?community__path_slug=${community.path_slug}&category=${
+    `${URLS.LOCATIONS}?community__path_slug=${community.path_slug}&category=${
       selectedCategory?.pk ?? ""
     }&search=${debouncedSearchPhrase ?? ""}`,
     async (url) => {
