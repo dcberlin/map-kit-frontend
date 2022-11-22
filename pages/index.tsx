@@ -31,11 +31,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col w-screen min-h-screen bg-gray-200 pb-10">
       <AuthWidget/>
-      <div className="flex flex-col h-2/5 gap-5 p-8 mt-3 items-center justify-center">
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+      <div className="flex flex-col h-2/5 gap-5 p-8 mt-12 items-center justify-center">
         <h1 className="text-4xl md:text-5xl font-bold text-center">Harta Diasporei</h1>
         <h4 className="text-xl md:text-2xl text-center">Kit de dezvoltare pentru harta comunității românești din orașul
           tău</h4>
@@ -53,7 +49,7 @@ export default function LandingPage() {
                   from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
               legacyBehavior>
               <h2 className="flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
-                  from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60 text-white cursor-pointer">{community.name}</h2>
+                  from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60 text-white cursor-pointer text-3xl font-bold">{community.name}</h2>
             </Link>)}
           <a
             className={`flex flex-col gap-2 justify-center items-center max-w-max h-48 bg-gradient-to-r
