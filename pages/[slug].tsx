@@ -11,7 +11,7 @@ import ErrorScreen from "../components/error-screen";
 import {useDebounce} from "../hooks";
 import {usePois, useSelectedCategory, useSearchPhrase} from "../context";
 import {URLS} from "../api";
-import {GetStaticPaths, GetStaticProps} from "next";
+import {GetServerSideProps} from "next";
 
 /**
  * Public community map page.
@@ -58,7 +58,12 @@ export default function CommunityMap({community, categories}) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getServerSideProps: GetServerSideProps = async ({ params, res, req }) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
+
   const catRes = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories/`
   );
@@ -80,21 +85,5 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       community,
       categories,
     },
-    revalidate: 10,
   };
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/communities`
-  );
-  const communities = await res.json();
-
-  const paths = communities.map((community) => ({
-    params: {
-      slug: community.path_slug.toString(),
-    },
-  }));
-
-  return {paths, fallback: "blocking"};
 }
