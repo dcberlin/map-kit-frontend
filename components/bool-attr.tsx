@@ -1,6 +1,6 @@
 import {CheckCircleIcon, XCircleIcon} from "@heroicons/react/solid";
 import React from "react";
-import {Switch} from "@mui/material";
+import {Switch, Tooltip} from "@mui/material";
 import {MutationData, useMutation} from "../hooks";
 
 // BoolAttribute is a component that displays a boolean attribute of a resource.
@@ -38,12 +38,13 @@ export default function BoolAttribute({value, edit}: BoolAttributeProps) {
     }
   });
 
-  return <Switch
-    checked={val}
-    color="info"
-    disabled={!edit}
-    size="small"
-    onChange={() => editLocation({[edit.editedKey]: !val})}
-    title={val ? "dezactivează" : "activează"}
-  />;
+  return <Tooltip title={val ? "dezactivează" : "activează"}>
+    <Switch
+      checked={val}
+      color="info"
+      disabled={!edit}
+      size="small"
+      onChange={() => editLocation({[edit.editedKey]: !val})}
+    />
+  </Tooltip>;
 }
