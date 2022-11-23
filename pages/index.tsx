@@ -89,6 +89,10 @@ export default function LandingPage() {
       <div className="flex justify-center text-xs pb-4 px-12 text-gray-800">
         <p>Conţinutul acestui site nu reprezintă poziţia oficială a Departamentului pentru românii de pretutindeni.</p>
       </div>
+      <div className="flex justify-center gap-5 text-xs pb-4 pt-6 px-12 text-blue-800">
+        <Link href="/terms-and-conditions" >Nutzungsbedingungen</Link>
+        <Link href="/privacy-policy" >Datenschutzerklärung</Link>
+      </div>
     </div>
   );
 }
