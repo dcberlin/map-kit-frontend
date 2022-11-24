@@ -58,7 +58,7 @@ function AuthWidget() {
                 opacity-0 ${menuVisible && "opacity-100"}`}
               onBlur={() => setMenuVisible(false)}
             >
-              <ul className="py-1 text-md">
+              <ul className="py-1 text-md list-none">
                 <li>
                   <Link href="/my-communities" className="block px-4 py-2 hover:bg-gray-100">Comunităţile mele</Link>
                 </li>
