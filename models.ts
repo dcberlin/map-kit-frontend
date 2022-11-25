@@ -27,6 +27,14 @@ export interface Location {
   category_label: string;
 }
 
+export interface LocationCategory {
+  pk: number;
+  name_slug: string;
+  color: string;
+  label_singular: string;
+  label_plural: string;
+}
+
 export interface User {
   approved: boolean;
 }
