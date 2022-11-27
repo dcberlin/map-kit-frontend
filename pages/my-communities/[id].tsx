@@ -12,12 +12,17 @@ import LoadingScreen from "../../components/loading-screen";
 import {URLS} from "../../api";
 import useSWRMutation from "swr/mutation";
 import {CollapsibleSection} from "../../components/collapsible-section";
-import {Community} from "../../models";
+import {Community, LocationCategory} from "../../models";
+import {GetServerSideProps} from "next";
+
+interface MyCommunityEditDetailProps {
+  locationCategories: LocationCategory[];
+}
 
 /*
  * Detail page of one community managed by the the authenticated user.
  */
-export default function MyCommunityEditDetail() {
+export default function MyCommunityEditDetail({locationCategories}: MyCommunityEditDetailProps) {
   const [community, setCommunity] = React.useState<Community>(null);
   const router = useRouter();
   const {id: communityPk} = router.query;
@@ -80,10 +85,17 @@ export default function MyCommunityEditDetail() {
         <div className="flex flex-col gap-7">
           <CommunityForm initialValues={community} onSubmit={handleSubmit} requestFailed={requestFailed}/>
           <CollapsibleSection title="Locaţii" collapsed={false}>
-            <LocationsForm community={community}/>
+            <LocationsForm community={community} possibleLocationCategories={locationCategories}/>
           </CollapsibleSection>
         </div>
       </div>
     </div>
   </>;
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ res}) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  const categoriesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories/`);
+  const locationCategories = await categoriesResponse.json();
+  return { props: { locationCategories } as MyCommunityEditDetailProps };
 }

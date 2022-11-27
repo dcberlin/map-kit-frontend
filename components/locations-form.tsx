@@ -5,16 +5,17 @@ import {LockClosedIcon} from "@heroicons/react/solid";
 import ErrorScreen from "../components/error-screen";
 import LoadingScreen from "../components/loading-screen";
 import {URLS} from "../api";
-import {Community, Location, User} from "../models";
+import {Community, Location, LocationCategory, User} from "../models";
 import BoolAttribute from "./bool-attr";
 import LocationModal, {LocationFormValues} from "./modal";
 import {DeleteTwoTone, EditTwoTone} from "@mui/icons-material";
 
 interface LocationsFormProps {
   community: Community;
+  possibleLocationCategories: LocationCategory[];
 }
 
-export default function LocationsForm({community}: LocationsFormProps) {
+export default function LocationsForm({community, possibleLocationCategories}: LocationsFormProps) {
   const [locations, setLocations] = React.useState<Location[]>(null);
   const [user, setUser] = React.useState(null);
   const {getAccessTokenSilently} = useAuth0();
@@ -88,13 +89,12 @@ export default function LocationsForm({community}: LocationsFormProps) {
     const requestData: Partial<Location> = {
       ...formValues,
       ...{community: community.pk},
-      ...({category: originalLocation && originalLocation.category || "magazine"}), // TODO FIXME
     };
     const endpointUrl = originalLocation && originalLocation.pk ?
       `${URLS.LOCATIONS_ADMIN}${originalLocation.pk}/` :
       URLS.LOCATIONS_ADMIN;
 
-    const response = await fetch(`${endpointUrl}`, {
+    const response = await fetch(endpointUrl, {
       method: originalLocation ? "PUT" : "POST",
       body: JSON.stringify(requestData),
       headers: {"Content-Type": "application/json", Authorization: `Bearer ${await getAccessTokenSilently()}`},
@@ -175,6 +175,7 @@ export default function LocationsForm({community}: LocationsFormProps) {
       onClose={onLocationFormClose}
       location={locationModalData}
       community={community}
+      locationCategories={possibleLocationCategories}
     />
 
   </div>;
