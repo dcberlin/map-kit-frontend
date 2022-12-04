@@ -63,6 +63,9 @@ function AuthWidget() {
                   <Link href="/my-communities" className="block px-4 py-2 hover:bg-gray-100">Comunităţile mele</Link>
                 </li>
                 <li>
+                  <Link href="/admins-code-of-conduct" className="block px-4 py-2 hover:bg-gray-100">Code of conduct</Link>
+                </li>
+                <li>
                   <a
                     onClick={() =>
                       logout({
