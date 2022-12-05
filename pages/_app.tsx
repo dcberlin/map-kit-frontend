@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 import {
@@ -8,8 +7,22 @@ import {
   SelectedCategoryProvider,
   SelectedPoiProvider,
 } from "../context";
+import {NextPage} from "next";
+import {ReactElement, ReactNode} from "react";
+import {AppProps} from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+
+  // use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <>
       <Auth0Provider
@@ -25,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <SelectedPoiProvider>
             <SelectedCategoryProvider>
               <SearchPhraseProvider>
-                <Component {...pageProps} />
+                {getLayout(<Component {...pageProps} />)}
               </SearchPhraseProvider>
             </SelectedCategoryProvider>
           </SelectedPoiProvider>
