@@ -141,11 +141,23 @@ const ModalForm = withFormik<AllFormProps, LocationFormValues>({
 
   handleSubmit: async (values: LocationFormValues, {
     setSubmitting,
+    setErrors,
     props: {community, originalLocation, onClose, onSubmit}
   }: FormikBag<AllFormProps, LocationFormValues>) => {
-    onSubmit(values, community, originalLocation);
-    setSubmitting(false);
-    onClose();
+    const errors = await onSubmit(values, community, originalLocation);
+    const errorKeys = Object.keys(errors)
+    if (errorKeys.length === 0) {
+      setSubmitting(false);
+      onClose();
+    } else if (errorKeys.includes("generic")) {
+      // TODO: Handle other status codes than 201, 200 and 400
+    } else {
+      const errorValues = Object.values(errors).map(errorArray => errorArray.join(", "));
+      // Here we need to transform the values of the errors object we get from the backend.
+      // DRF returns an array of strings, but formik expects a string as value, so we join
+      // the error strings that we get from DRF. This is in most cases just one string.
+      setErrors(Object.fromEntries(errorKeys.map((errorKey, i) => [errorKey, errorValues[i]])));
+    }
   },
 })(InnerForm);
 

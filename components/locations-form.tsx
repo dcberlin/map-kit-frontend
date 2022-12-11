@@ -100,14 +100,23 @@ export default function LocationsForm({community, possibleLocationCategories}: L
       headers: {"Content-Type": "application/json", Authorization: `Bearer ${await getAccessTokenSilently()}`},
     });
 
-    if (response.status === 201 || response.status === 200) {
-      const body = await response.json();
+    const body = await response.json();
+    const status = response.status;
+
+    if (status === 201 || status === 200) {
       if (originalLocation) {
         // TODO locations sorting changes here on refresh (probably the list endpoint returns them in a different order)
         setLocations(locations.map(l => l.pk === body.pk ? body : l));
       } else {
         setLocations([...locations, body]);
       }
+      return {}
+    } else if (status === 400) {
+      return body
+    } else {
+      return {"generic": [
+        "Unexpected error. Please try again or contact tehnic@diasporacivica.berlin."
+      ]}
     }
   }
 
