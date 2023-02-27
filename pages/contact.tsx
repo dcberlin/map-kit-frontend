@@ -2,7 +2,7 @@ import React from "react";
 import {NextPageWithLayout} from "./_app";
 import FrontLayout from "../components/layout/frontLayout";
 import * as Yup from 'yup';
-import {withFormik, FormikProps, Form, Field} from 'formik';
+import {Field, Form, FormikProps, withFormik} from 'formik';
 
 // @see https://formik.org/docs/guides/typescript
 
@@ -18,7 +18,7 @@ interface OtherProps {
 
 type AllFormProps = OtherProps & FormikProps<FormValues>;
 
-// Aside: You may see InjectedFormikProps<OtherProps, FormValues> instead of what comes below in older code.. InjectedFormikProps was artifact of when Formik only exported a HoC. It is also less flexible as it MUST wrap all props (it passes them through).
+// Aside: You may see InjectedFormikProps<OtherProps, FormValues> instead of what comes below in older code. InjectedFormikProps was artifact of when Formik only exported a HoC. It is also less flexible as it MUST wrap all props (it passes them through).
 const InnerForm = (props: AllFormProps) => {
   const {touched, errors, isSubmitting, msg} = props;
   return <>
@@ -82,12 +82,13 @@ interface MyFormProps {
 
 // Wrap our form with the withFormik HoC
 const ContactForm = withFormik<MyFormProps, FormValues>({
-  // Transform outer props into form values
-  mapPropsToValues: props => {
-    return {
-      email: props.initialEmail || '',
-      message: '',
-    };
+  mapPropsToValues: props => ({
+    email: props.initialEmail || '',
+    message: '',
+  }),
+
+  handleSubmit: () => {
+    // todo make a django endpoint and send email
   },
 
   validationSchema: (props: AllFormProps) => Yup.object().shape({
@@ -98,10 +99,6 @@ const ContactForm = withFormik<MyFormProps, FormValues>({
       .min(10, "Mesajul e cam scurt")
       .max(2000, "Mesajul e cam lung. Poate contine maxim 2000 de caractere"),
   }),
-
-  handleSubmit: values => {
-    // todo cand merge mailul
-  },
 })(InnerForm);
 
 const ContactPage: NextPageWithLayout = () => {

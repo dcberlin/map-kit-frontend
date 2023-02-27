@@ -1,19 +1,45 @@
-import React from "react";
-import { ChevronRightIcon, ViewListIcon } from "@heroicons/react/outline";
+import React, {useEffect, useRef} from "react";
+import {ChevronRightIcon, ViewListIcon} from "@heroicons/react/outline";
 
-import { usePois, useSelectedPoi } from "../context";
+import {usePois, useSelectedPoi} from "../context";
 
 /**
  * Side drawer used for listing POIs
  */
-export default function ListDrawer() {
+export default function LocationsListDrawer() {
   const [open, setOpen] = React.useState(false);
-  const [pois, setPois] = usePois();
-  const [selectedPoi, setSelectedPoi] = useSelectedPoi();
+  const [pois] = usePois();
+  const [_, setSelectedPoi, selectedLocation] = useSelectedPoi();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, [ref]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [ref]);
 
   return (
     <>
       <div
+        ref={ref}
         className="fixed right-0 bottom-[30%] w-12 h-12 p-3 rounded-l-full text-gray-600 bg-white drop-shadow-xl cursor-pointer"
         onClick={() => {
           setOpen(true);
@@ -43,7 +69,7 @@ export default function ListDrawer() {
                   <div
                     key={index}
                     className={`border border-gray-300 bg-white rounded-lg p-2 cursor-pointer ${
-                      selectedPoi?.properties?.pk === pk &&
+                      selectedLocation?.pk === pk &&
                       "border-2 border-red-300 bg-gray-100"
                     }`}
                     onClick={() => {

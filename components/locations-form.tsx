@@ -7,7 +7,7 @@ import LoadingScreen from "../components/loading-screen";
 import {URLS} from "../api";
 import {Community, Location, LocationCategory, User} from "../models";
 import BoolAttribute from "./bool-attr";
-import LocationModal, {LocationFormValues} from "./modal";
+import LocationModal, {LocationFormValues} from "./modal-location";
 import {DeleteTwoTone, EditTwoTone} from "@mui/icons-material";
 
 interface LocationsFormProps {

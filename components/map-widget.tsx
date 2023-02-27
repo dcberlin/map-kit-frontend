@@ -1,8 +1,9 @@
 import React from "react";
-import Map, {Source, Layer, Marker, useMap} from "react-map-gl";
+import Map, {Layer, MapLayerMouseEvent, Marker, Source, useMap} from "react-map-gl";
 
-import {useSelectedPoi, usePois} from "../context";
+import {usePois, useSelectedPoi} from "../context";
 import {ArrowDownIcon} from "@heroicons/react/solid";
+import {Point} from "geojson";
 
 /**
  * Map with POIs. The initial viewport is set to the specified bbox
@@ -12,14 +13,15 @@ import {ArrowDownIcon} from "@heroicons/react/solid";
  */
 export default function MapWidget({bbox}) {
   const [cursor, setCursor] = React.useState("auto");
-  const [pois, setPois] = usePois();
+  const [pois] = usePois();
   const [selectedPoi, setSelectedPoi] = useSelectedPoi();
 
-  const onClick = (e) => {
-    if (e.features.length > 0) {
-      const {lng, lat} = e.lngLat;
-      const [feature] = e.features;
-      setSelectedPoi(feature);
+  const onClick = (e: MapLayerMouseEvent) => {
+    if (e.features?.length > 0) {
+      // selects the first feature
+      setSelectedPoi(e.features[0]);
+    } else {
+      setSelectedPoi(null);
     }
   };
 
@@ -39,19 +41,19 @@ export default function MapWidget({bbox}) {
           interactiveLayerIds={["poi"]}
           onClick={onClick}
           cursor={cursor}
-          onMouseEnter={() => setCursor("pointer")}
-          onMouseLeave={() => setCursor("auto")}
+          onMouseEnter={(e: MapLayerMouseEvent) => setCursor("pointer")}
+          onMouseLeave={(e: MapLayerMouseEvent) => setCursor("auto")}
           minZoom={6}
         >
-          <MapImage/>
+          <MapImage />
           <Source id="poi-data" type="geojson" data={pinData}>
             {selectedPoi?.geometry && (
               <Marker
-                longitude={selectedPoi.geometry.coordinates[0]}
-                latitude={selectedPoi.geometry.coordinates[1]}
+                longitude={(selectedPoi.geometry as Point).coordinates[0]}
+                latitude={(selectedPoi.geometry as Point).coordinates[1]}
                 anchor="bottom"
               >
-                <ArrowDownIcon className="text-red-600 pb-3 w-10 h-10 animate-bounce"/>
+                <ArrowDownIcon className="text-red-600 pb-3 w-10 h-10 animate-bounce" />
               </Marker>
             )}
             <Layer
@@ -70,6 +72,10 @@ export default function MapWidget({bbox}) {
 
 function MapImage() {
   const {current: map} = useMap();
+
+  if (map.hasImage("map-pin")) {
+    return null;
+  }
 
   map.loadImage("/pin.png", (error, image) => {
     if (error) throw error;

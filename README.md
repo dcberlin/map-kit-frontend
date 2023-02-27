@@ -16,8 +16,8 @@ moderators.
 
 The app is built with Next.js and Tailwind, forms are built using Formik and
 authentication is done with OIDC (social auth) via Auth0. The project is
-written in JS but it's Typescript ready, in case an incremental transition is
-desired at any point. 
+written in JS, but it's Typescript ready, in case an incremental transition is
+desired at any point.
 
 ## Set up for development
 

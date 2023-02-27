@@ -1,12 +1,12 @@
 import React from "react";
-import { Formik, Field, Form } from "formik";
+import {Field, Form, Formik} from "formik";
 
-import { PlusCircleIcon } from "@heroicons/react/outline";
+import {PlusCircleIcon} from "@heroicons/react/outline";
 
 /**
  * Modal for proposing a new location
  */
-export default function LocationProposalModal({ communityPk }) {
+export default function LocationProposalModal({communityPk}) {
   let [isOpen, setIsOpen] = React.useState(false);
   let [locationSubmitted, setLocationSubmitted] = React.useState(false);
   let [requestFailed, setRequestFailed] = React.useState(false);
@@ -24,8 +24,8 @@ export default function LocationProposalModal({ communityPk }) {
   async function handleSubmit(values) {
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/location-proposal/`, {
       method: "POST",
-      body: JSON.stringify({ ...values, community: communityPk }),
-      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({...values, community: communityPk}),
+      headers: {"Content-Type": "application/json"},
     }).then((response) => {
       if (response.status !== 201) {
         setRequestFailed(true);
@@ -35,7 +35,7 @@ export default function LocationProposalModal({ communityPk }) {
     });
   }
 
-  function validate(values, props) {
+  function validate(values) {
     const errors = {};
 
     if (!values.name) {
@@ -74,7 +74,7 @@ export default function LocationProposalModal({ communityPk }) {
         onSubmit={handleSubmit}
         validate={validate}
       >
-        {({ errors, touched }) => (
+        {({errors, touched}) => (
           <Form className="flex flex-col mt-8">
             <div>
               <label
@@ -92,9 +92,9 @@ export default function LocationProposalModal({ communityPk }) {
                 type="text"
                 placeholder="Centrul comunitar Gropiusstadt"
               />
-              <p className="text-red-500 my-1 text-sm h-4">
-                {touched.name && errors.name}
-              </p>
+              {touched.name && errors.name &&
+                <p className="text-red-500 my-1 text-sm h-4">{errors.name}</p>
+              }
             </div>
             <div>
               <label
@@ -112,9 +112,9 @@ export default function LocationProposalModal({ communityPk }) {
                 type="text"
                 placeholder="Karl-Marx-Allee 999, 10101 Berlin"
               />
-              <p className="text-red-500 my-1 text-sm h-4">
-                {touched.address && errors.address}
-              </p>
+              {touched.address && errors.address &&
+                <p className="text-red-500 my-1 text-sm h-4">{errors.address}</p>
+              }
             </div>
             <div>
               <label
@@ -147,9 +147,9 @@ export default function LocationProposalModal({ communityPk }) {
                 type="url"
                 placeholder="https://example.com"
               />
-              <p className="text-red-500 my-1 text-sm h-4">
-                {touched.website && errors.website}
-              </p>
+              {touched.website && errors.website &&
+                <p className="text-red-500 my-1 text-sm h-4">{errors.website}</p>
+              }
             </div>
             <div>
               <label
@@ -167,9 +167,9 @@ export default function LocationProposalModal({ communityPk }) {
                 type="email"
                 placeholder="centru@example.com"
               />
-              <p className="text-red-500 my-1 text-sm h-4">
-                {touched.email && errors.email}
-              </p>
+              {touched.email && errors.email &&
+                <p className="text-red-500 my-1 text-sm h-4">{errors.email}</p>
+              }
             </div>
             <div>
               <label
@@ -254,7 +254,8 @@ export default function LocationProposalModal({ communityPk }) {
           >
             &#8203;
           </span>
-          <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+          <div
+            className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
             {locationSubmitted ? SuccessContent : SubmissionForm}
           </div>
         </div>

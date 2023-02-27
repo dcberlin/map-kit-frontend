@@ -1,31 +1,21 @@
-import React from "react";
-import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  FilterIcon,
-} from "@heroicons/react/outline";
-import { LocationMarkerIcon } from "@heroicons/react/solid";
+import React, {useEffect, useRef, useState} from "react";
+import {ChevronDownIcon, FilterIcon,} from "@heroicons/react/outline";
+import {LocationMarkerIcon} from "@heroicons/react/solid";
 
-import { usePois, useSelectedCategory } from "../context";
+import {useSelectedCategory} from "../context";
 
 /**
  * Side drawer used for filtering and searching for POIs
  */
-export default function FilterDrawer({ categories: initialCategories = [] }) {
-  const genericCategory = {
-    label_plural: "Toate categoriile",
-    name_slug: "all",
-    color: "#000",
-    pk: null,
-  };
-  const categories = [genericCategory, ...initialCategories];
+export default function CategoriesDrawer({categories: initialCategories = []}) {
+  const categories = withGenericCategory(initialCategories);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useSelectedCategory();
-  const [showCategoryMenu, setShowCategoryMenu] = React.useState(false);
-  const ref = React.useRef(null);
+  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
+  const ref = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         setOpen(false);
@@ -36,6 +26,18 @@ export default function FilterDrawer({ categories: initialCategories = [] }) {
       document.removeEventListener("click", handleClickOutside, true);
     };
   });
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [ref]);
 
   return (
     <>
@@ -103,4 +105,8 @@ export default function FilterDrawer({ categories: initialCategories = [] }) {
       </div>
     </>
   );
+}
+
+export function withGenericCategory(categories, allCategory = { label_plural: "Toate categoriile", name_slug: "all", color: '#000', pk: null }) {
+  return [allCategory, ...categories];
 }

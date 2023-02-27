@@ -2,11 +2,7 @@ import React, {useState} from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import {useAuth0} from "@auth0/auth0-react";
-import {
-  ArrowLeftIcon,
-  DocumentRemoveIcon, ExternalLinkIcon,
-  PencilAltIcon,
-} from "@heroicons/react/solid";
+import {ArrowLeftIcon, ExternalLinkIcon, PencilAltIcon,} from "@heroicons/react/solid";
 
 import ErrorScreen from "../../components/error-screen";
 import AuthWidget from "../../components/auth-widget";
@@ -14,6 +10,7 @@ import LoadingScreen from "../../components/loading-screen";
 import {URLS} from "../../api";
 import {Community} from "../../models";
 import BoolAttribute from "../../components/bool-attr";
+import MapHeader from "../../components/map-header";
 
 /**
  * Overview page of all communities managed by the authenticated user.
@@ -35,22 +32,23 @@ export default function MyCommunities() {
 
   if (error) {
     console.error(error);
-    return <ErrorScreen message={error}/>;
+    return <ErrorScreen message={error} />;
   }
 
   if (!data) {
-    return <LoadingScreen/>;
+    return <LoadingScreen />;
   }
 
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-gray-200">
-      <AuthWidget/>
+      <MapHeader inAdminScreen />
+      <AuthWidget />
       <div
         className="flex flex-col h-2/3 w-2/3 gap-6 p-6 justify-between bg-white rounded-xl overflow-auto drop-shadow-2xl">
         <div className="flex w-full justify-end">
           <Link href="/" legacyBehavior>
             <button>
-              <ArrowLeftIcon className="w-6 h-6 text-gray-400"/>
+              <ArrowLeftIcon className="w-6 h-6 text-gray-400" />
             </button>
           </Link>
         </div>
@@ -88,11 +86,6 @@ export default function MyCommunities() {
                 <Link href={`/my-communities/${community.pk}`} legacyBehavior>
                   <button className="h-full justify-end" title="editează">
                     <PencilAltIcon className="w-6 h-6 text-blue-700"/>
-                  </button>
-                </Link>
-                <Link href={`/my-communities/${community.pk}/delete`} legacyBehavior>
-                  <button className="h-full justify-end" title="șterge">
-                    <DocumentRemoveIcon className="w-6 h-6 text-red-700"/>
                   </button>
                 </Link>
               </td>
