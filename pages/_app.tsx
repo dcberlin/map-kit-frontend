@@ -1,12 +1,7 @@
 import "../styles/globals.css";
-import { Auth0Provider } from "@auth0/auth0-react";
+import {Auth0Provider} from "@auth0/auth0-react";
 
-import {
-  PoisProvider,
-  SearchPhraseProvider,
-  SelectedCategoryProvider,
-  SelectedPoiProvider,
-} from "../context";
+import {PoisProvider, SearchPhraseProvider, SelectedCategoryProvider, SelectedPoiProvider,} from "../context";
 import {NextPage} from "next";
 import {ReactElement, ReactNode} from "react";
 import {AppProps} from "next/app";

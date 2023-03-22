@@ -1,17 +1,17 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { UserCircleIcon } from "@heroicons/react/solid";
+import {useEffect, useRef, useState} from "react";
+import {useAuth0} from "@auth0/auth0-react";
+import {UserCircleIcon} from "@heroicons/react/solid";
 import Link from "next/link";
 
 function AuthWidget() {
-  const { user, isAuthenticated, isLoading, logout, loginWithRedirect } = useAuth0();
-  const [menuVisible, setMenuVisible] = React.useState(false);
-  const ref = React.useRef(null);
-  const [showFallbackIcon, setShowFallbackIcon] = React.useState(false);
+  const {user, isAuthenticated, logout, loginWithRedirect} = useAuth0();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const ref = useRef(null);
+  const [, setShowFallbackIcon] = useState(false);
 
   const onClickOutside = () => setMenuVisible(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         onClickOutside();
@@ -28,7 +28,7 @@ function AuthWidget() {
       {isAuthenticated ? (
         <div
           ref={ref}
-          className="flex flex-col items-center bg-white w-44 h-10 pl-4 rounded-3xl drop-shadow-2xl cursor-pointer"
+          className="flex flex-col items-center bg-white w-44 pl-4 rounded-3xl drop-shadow-2xl cursor-pointer"
           onClick={() => setMenuVisible(!menuVisible)}
         >
           <div className="flex gap-3 items-center justify-end">

@@ -14,13 +14,14 @@ import useSWRMutation from "swr/mutation";
 import {CollapsibleSection} from "../../components/collapsible-section";
 import {Community, LocationCategory} from "../../models";
 import {GetServerSideProps} from "next";
+import MapHeader from "../../components/map-header";
 
 interface MyCommunityEditDetailProps {
   locationCategories: LocationCategory[];
 }
 
 /*
- * Detail page of one community managed by the the authenticated user.
+ * Detail page of one community managed by the authenticated user.
  */
 export default function MyCommunityEditDetail({locationCategories}: MyCommunityEditDetailProps) {
   const [community, setCommunity] = React.useState<Community>(null);
@@ -69,6 +70,7 @@ export default function MyCommunityEditDetail({locationCategories}: MyCommunityE
   }
 
   return <>
+    <MapHeader community={community} inAdminScreen />
     <AuthWidget/>
     <div className="flex min-h-screen w-screen items-center justify-center bg-gray-200">
       <div className="flex flex-col mt-20 mb-20 w-2/3 p-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">

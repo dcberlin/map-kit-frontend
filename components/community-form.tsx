@@ -1,11 +1,10 @@
 import React from "react";
-import {Formik, Field, Form, FormikErrors} from "formik";
+import {Field, Form, Formik, FormikErrors} from "formik";
 import {WebMercatorViewport} from "@math.gl/web-mercator";
 import Map, {ViewStateChangeEvent} from "react-map-gl";
 import {PencilAltIcon} from "@heroicons/react/solid";
 import {Community} from "../models";
 import {CollapsibleSection} from "./collapsible-section";
-import {useRouter} from "next/router";
 
 interface CommunityFormProps {
   initialValues: Community;
@@ -15,7 +14,6 @@ interface CommunityFormProps {
 
 export default function CommunityForm({onSubmit, initialValues, requestFailed}: CommunityFormProps) {
   const [mapEditable, setMapEditable] = React.useState(true);
-  const router = useRouter();
 
   const validateForm = (values: Community): FormikErrors<Community> => {
     const errors: FormikErrors<typeof values> = {};

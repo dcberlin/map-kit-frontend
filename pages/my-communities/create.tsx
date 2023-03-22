@@ -12,7 +12,7 @@ import {Community} from "../../models";
 /**
  * Page for submitting a new community proposal.
  */
-export default function CommunityCreateProposal({communityId}) {
+export default function CommunityCreateProposal() {
   const [requestFailed, setRequestFailed] = React.useState(false);
   const {getAccessTokenSilently} = useAuth0();
   const router = useRouter();

@@ -1,8 +1,7 @@
 import React from "react";
-import { MenuIcon, SearchIcon, BackspaceIcon } from "@heroicons/react/solid";
+import {BackspaceIcon, SearchIcon} from "@heroicons/react/solid";
 
-import { usePois } from "../context";
-import { useSearchPhrase } from "../context";
+import {useSearchPhrase} from "../context";
 
 /**
  * Drawer used for filtering and searching for POIs
@@ -23,7 +22,19 @@ export default function SearchDrawer({ locations, bbox }) {
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
-  });
+  }, [ref]);
+
+  React.useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [ref]);
 
   function onChange(e) {
     setSearchPhrase(e.target.value);
@@ -47,7 +58,7 @@ export default function SearchDrawer({ locations, bbox }) {
           <input
             className="h-full w-full items-center"
             type="text"
-            value={searchPhrase}
+            value={searchPhrase || ''}
             onChange={onChange}
           ></input>
           <BackspaceIcon

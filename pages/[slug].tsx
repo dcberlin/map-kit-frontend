@@ -1,25 +1,31 @@
 import React from "react";
 import useSWR from "swr";
-import FilterDrawer from "../components/filter-drawer";
-import ListDrawer from "../components/list-drawer";
+import CategoriesDrawer from "../components/categories-drawer";
+import LocationsListDrawer from "../components/locations-list-drawer";
 import MapWidget from "../components/map-widget";
 import MapHeader from "../components/map-header";
-import PoiDrawer from "../components/poi-drawer";
+import LocationDrawer from "../components/poi-drawer";
 import SearchDrawer from "../components/search-drawer";
 import LocationProposalModal from "../components/location-proposal-modal";
 import ErrorScreen from "../components/error-screen";
 import {useDebounce} from "../hooks";
-import {usePois, useSelectedCategory, useSearchPhrase} from "../context";
+import {usePois, useSearchPhrase, useSelectedCategory} from "../context";
 import {URLS} from "../api";
 import {GetServerSideProps} from "next";
+import {Community, LocationCategory} from "../models";
+
+interface CommunityMapProps {
+  community: Community;
+  categories: LocationCategory[];
+}
 
 /**
  * Public community map page.
  */
-export default function CommunityMap({community, categories}) {
-  const [pois, setPois] = usePois();
-  const [selectedCategory, setSelectedCategory] = useSelectedCategory();
-  const [searchPhrase, setSearchPhrase] = useSearchPhrase();
+export default function CommunityMap({community, categories}: CommunityMapProps) {
+  const [_, setPois] = usePois();
+  const [selectedCategory] = useSelectedCategory();
+  const [searchPhrase] = useSearchPhrase();
   const debouncedSearchPhrase = useDebounce(searchPhrase, 500);
 
   const {error} = useSWR(
@@ -39,26 +45,26 @@ export default function CommunityMap({community, categories}) {
 
   return (
     <>
-      <MapHeader communityName={community.name}/>
+      <MapHeader community={community} />
 
       {/* Right edge drawers */}
       <div className="fixed right-0 bottom-1/3 z-20">
         <div className="flex flex-col gap-2">
-          <FilterDrawer categories={categories}/>
-          <SearchDrawer locations={undefined} bbox={undefined}/>
-          <ListDrawer/>
-          <LocationProposalModal communityPk={community.pk}/>
+          <CategoriesDrawer categories={categories} />
+          <SearchDrawer locations={undefined} bbox={undefined} />
+          <LocationsListDrawer />
+          <LocationProposalModal communityPk={community.pk} />
         </div>
       </div>
 
-      <PoiDrawer/>
+      <LocationDrawer categories={categories} community={community} />
 
-      <MapWidget bbox={community.bbox}/>
+      <MapWidget bbox={community.bbox} />
     </>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params, res, req }) => {
+export const getServerSideProps: GetServerSideProps = async ({params, res}) => {
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59'
