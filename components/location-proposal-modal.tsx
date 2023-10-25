@@ -129,7 +129,7 @@ export default function LocationProposalModal({communityPk}) {
             
               <GooglePlacesAutocomplete
                   debounce={800}
-                  apiKey="AIzaSyCI864lm2gAd_uct9RcbvBnx2LCyHzvoYw"
+                  apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
                   selectProps={
                     {
                       onChange: (e)=>{handleAddress(e)},
