@@ -2,244 +2,110 @@ import AuthWidget from "../auth-widget";
 import CitiesModal from "../cities-modal";
 import Image from "next/image";
 import Link from "next/link";
-import React, {PropsWithChildren,useEffect,useState} from "react";
-// import ReactMapGL, { Source, Layer, Marker, Popup } from 'react-map-gl';
+import React, {PropsWithChildren,use,useEffect,useState} from "react";
 import mapboxgl from 'mapbox-gl';
 
-const FrontLayout = ({children}: PropsWithChildren<{}>) => {
-
-  const countries_array = [
-    {
-      name: 'telaviv',
-      full_name: "Tel Aviv-Yafo",
-      borderGeoJSON: 'geojsons/telaviv.geojson',
-      markerCoordinates: [34.7806, 32.0809],
-    },
-    {
-      name: 'berlin',
-      full_name: "Berlin",
-      borderGeoJSON: 'geojsons/berlin.geojson',
-      markerCoordinates: [13.4050, 52.5200],
-    },
-    {
-      name: 'praga',
-      full_name: "Praga",
-      borderGeoJSON: 'geojsons/praga.geojson',
-      markerCoordinates: [14.4378, 50.0755],
-    },
-    {
-      name: 'nottingham',
-      full_name: "Nottingham",
-      borderGeoJSON: 'geojsons/nottingham.geojson',
-      markerCoordinates: [-1.1581, 52.9548],
-    },
-    {
-      name: 'amsterdam',
-      full_name: "Amsterdam",
-      borderGeoJSON: 'geojsons/amsterdam.geojson',
-      markerCoordinates: [4.899431, 52.379189],
-    },
-    {
-      name: 'muenchen',
-      full_name: "Munchen",
-      borderGeoJSON: 'geojsons/muenchen.geojson',
-      markerCoordinates: [11.576124, 48.137154],
-    },
-    {
-      name: 'offenbach-am-main',
-      full_name: "Offenbach am main",
-      borderGeoJSON: 'geojsons/offenbach-am-main.geojson',
-      markerCoordinates: [8.7393692, 50.0921768],
-    },
-    {
-      name: 'furth',
-      full_name: "Furth",
-      borderGeoJSON: 'geojsons/furth.geojson',
-      markerCoordinates: [11.0018894, 49.480312],
-    },
-    {
-      name: 'nuremberg',
-      full_name: "Nuremberg",
-      borderGeoJSON: 'geojsons/nuremberg.geojson',
-      markerCoordinates: [11.061859, 49.460983],
-    },
-    {
-      name: 'zagreb',
-      full_name: "Zagreb",
-      borderGeoJSON: 'geojsons/zagreb.geojson',
-      markerCoordinates: [15.966568, 45.815399],
-    },
-    {
-      name: 'giessen',
-      full_name: "Giesen",
-      borderGeoJSON: 'geojsons/giessen.geojson',
-      markerCoordinates: [9.8554344,52.1981902],
-    },
-    {
-      name: 'frankfurt-am-main',
-      full_name: "Frankfurt am main",
-      borderGeoJSON: 'geojsons/frankfurt-am-main.geojson',
-      markerCoordinates: [8.5670227,50.1492757],
-    },
-    {
-      name: 'Mansfield',
-      full_name: "Mansfield",
-      borderGeoJSON: 'geojsons/Mansfield.geojson',
-      markerCoordinates: [-1.1935052,53.138624],
-    },
-    {
-      name: 'grenoble',
-      full_name: "Grenoble",
-      borderGeoJSON: 'geojsons/grenoble.geojson',
-      markerCoordinates: [5.7262,45.1755],
-    }
-  ];
+const FrontLayout = ({children, data}: PropsWithChildren<{data : any}>) => {
 
   const [mapState, setMapState] = useState(null);
 
   const zoomToCity = (city) => {
+
+    const [minLng, minLat, maxLng, maxLat] = city.bbox;
+    const centerLng = (minLng + maxLng) / 2;
+    const centerLat = (minLat + maxLat) / 2;
+
     mapState.flyTo({
-      center: city.markerCoordinates,
+      center: [centerLng, centerLat],
       zoom: 10,
       speed: 1,
     });
   };
 
+  function createCustomMarker(location) {
+    const customMarker = document.createElement('div');
+  customMarker.style.width = '30px'; // Set the width of the custom marker
+  customMarker.style.height = '30px'; // Set the height of the custom marker
+  customMarker.style.borderRadius = '50%'; // Make it a circle
+  customMarker.style.backgroundColor = 'rgba(255, 0, 0, 0.5'; // Set the background color for the circle
+  customMarker.style.cursor = 'pointer'; // Set the background color for the circle
+
+  const markerText = document.createElement('div');
+  markerText.textContent = location.name.charAt(0); // Display the initial of the location name
+  markerText.style.textAlign = 'center';
+  markerText.style.lineHeight = '30px'; // Vertically center the text
+  markerText.style.fontSize = '16px'; // Adjust the font size as needed
+  markerText.style.fontWeight = 'bold'; // Make the letter bold
+  markerText.style.color = 'white'; // Set the text color
+
+  customMarker.appendChild(markerText);
+
+  return customMarker;
+  }
+
   useEffect(() => {
-    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || '';
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/03b8/ckvzmtn0k14xr14n7vg8aqske',
-      center: [11.11829, 46.07045],
-      zoom: 4,
-    });
+      mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || '';
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/03b8/ckvzmtn0k14xr14n7vg8aqske',
+        center: [11.11829, 46.07045],
+        zoom: 4,
+      });
+      setMapState(map);
+  },[]);
 
-    map.on('load', () => {
-      Object.keys(countries_array).forEach(async (sourceId)=>{
-        const {name, borderGeoJSON, markerCoordinates} = countries_array[sourceId];
-        map.addSource(name, {
-          type: 'geojson',
-          data: borderGeoJSON
+  useEffect(() => {
+   if(mapState){
+    mapState.on('load', () => {
+      data.forEach((location) => {
+
+        const [minLng, minLat, maxLng, maxLat] = location.bbox;
+        const centerLng = (minLng + maxLng) / 2;
+        const centerLat = (minLat + maxLat) / 2;
+        const marker = new mapboxgl.Marker({
+          element: createCustomMarker(location) // Create a custom marker element
+        })
+        .setLngLat([centerLng, centerLat])
+        .addTo(mapState);
+
+        marker.getElement().addEventListener('click', () => {
+          window.location.href = `/${location.path_slug}`;
+        });
+        const popupContent = document.createElement('div');
+        popupContent.innerHTML = `
+          <div class="text-center">
+            <h3 class="text-lg font-semibold">${location.name}</h3>
+          </div>
+        `;
+    
+        // Create a popup and set the custom content
+        const popup = new mapboxgl.Popup({ offset: 25, closeOnClick: false, closeButton: false }) // closeOnClick: false prevents auto-close
+          .setDOMContent(popupContent)
+          .setMaxWidth("300px");
+    
+        // Attach the popup to the marker
+        marker.setPopup(popup);
+
+        marker.getElement().addEventListener('mouseenter', () => {
+          popup.addTo(mapState);
         });
 
-        map.addLayer({
-          id: `${name}-fills`,
-          type: 'fill',
-          source: name,
-          layout: {},
-          paint: {
-            'fill-color': '#627BC1',
-            'fill-opacity': [
-              'case',
-              ['boolean', ['feature-state', 'hover'], false],
-              1,
-              0.5
-            ]
-          }
+        // Hide the popup on marker mouseleave
+        marker.getElement().addEventListener('mouseleave', () => {
+          popup.remove();
         });
-
-        map.loadImage('pin_landing_2.png', (error, image) => {
-          if (error) throw error;
-          map.addImage(`${name}-marker`, image);
-          map.addLayer({
-            id: `${name}-markers`,
-            type: 'symbol',
-            source: {
-              type: 'geojson',
-              data: {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'Point',
-                  coordinates: markerCoordinates,
-                },
-              },
-            },
-            layout: {
-              'icon-image': `${name}-marker`,
-              'icon-size': 0.2, 
-            },
-          });
-        });
-
-        map.addLayer({
-          id: `${name}-text`,
-          type: 'symbol',
-          source: {
-            type: 'geojson',
-            data: {
-              type: 'Feature',
-              properties: {},
-              geometry: {
-                type: 'Point',
-                coordinates: markerCoordinates, // Textul va fi afișat la coordonatele markerului
-              },
-            },
-          },
-          layout: {
-            'text-field': countries_array[sourceId].full_name,
-            'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-            'text-size': 12,
-          },
-          paint: {
-            'text-color': 'black',
-          },
-        });
-
-        map.setLayoutProperty(`${name}-text`, 'visibility', 'none');
-
-        map.on('zoom', () => {
-          const newZoomLevel = map.getZoom();
-          // Hide the markers when zoom level exceeds a certain value
-          if (newZoomLevel > 7) {
-            map.setLayoutProperty(`${name}-markers`, 'visibility', 'none');
-            map.setLayoutProperty(`${name}-text`, 'visibility', 'visible');
-          } else {
-            map.setLayoutProperty(`${name}-markers`, 'visibility', 'visible');
-            map.setLayoutProperty(`${name}-text`, 'visibility', 'none');
-          }
-        });
-
-        map.on('click', `${name}-markers`, (e) => {
-          map.flyTo({
-            center: markerCoordinates,
-            zoom: 7.5,
-            speed: 1,
-          });
-        });
-
-        map.on('mouseenter', `${name}-markers`, () => {
-          map.getCanvas().style.cursor = 'pointer';
-        });
-        
-        map.on('mouseleave', `${name}-markers`, () => {
-          map.getCanvas().style.cursor = '';
-        });
-
-        map.on('mousemove', `${name}-fills`, (e) => {
-         map.getCanvas().style.cursor = 'pointer';
-         map.setPaintProperty(`${name}-fills`, 'fill-color', 'red');
-        });
-
-        map.on('click', `${name}-fills`, (e) => {
-        window.location.href= countries_array[sourceId].name;
-        });
-
-        map.on('mouseleave', `${name}-fills`, () => {
-            map.getCanvas().style.cursor = ''; 
-            map.setPaintProperty(`${name}-fills`, 'fill-color', '#627BC1');
-        });
+    
       });
     });
-
-    setMapState(map);
-  }, []);
+   }
+  }, [mapState]);
 
   return (
     <div className="flex flex-col justify-between w-screen min-h-screen " style={{backgroundColor:'#344c6c'}}>
       <AuthWidget/>
-      <CitiesModal cities={countries_array} zoomToCity={zoomToCity}/>
+      <CitiesModal cities={data} zoomToCity={zoomToCity}/>
   
+  {/* TITLU */}
       <div className="fixed w-full sm:w-auto bottom-0 sm:left-5 sm:top-0 z-20 bg-black bg-opacity-30 sm:bg-transparent sm:h-20">
         <div className="flex flex-col gap-5 p-8">
           <div className="flex">
@@ -256,38 +122,46 @@ const FrontLayout = ({children}: PropsWithChildren<{}>) => {
         </div>
       </div>
 
+    {/* Footer */}
+      <div className="fixed w-auto sm:right-0 sm:bottom-0 z-20 bg-white bg-opacity-50 hidden sm:block">
+        <div className="flex flex-col gap-2 pt-5">
+          <div className="flex justify-center text-md px-12 text-gray-800">
+            <p>Conţinutul acestui site nu reprezintă poziţia oficială a Departamentului <br/> pentru românii de pretutindeni.</p>
+          </div>
+          <div className="w-full pt-0 mt-0">
+            <div className="flex gap-8 justify-center px-3 pr-12 py-0 my-0">
+              <div className="w-1/2 p-4 flex justify-center pt-0 mt-0">
+                <a className="flex flex-col justify-center" href="https://diasporacivica.berlin" target="_blank" rel="noreferrer">
+                  <h3 className="text-gray-800 mb-3">Realizat de</h3>
+                  <Image
+                  className="mx-auto"
+                    src="/logo-dcb_old.png"
+                    alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
+                    width={100}
+                    height={100}
+                  />
+                </a>
+                </div>
+                <div className="w-1/2 p-4 flex justify-center pt-0 mt-0">
+                  <a className="flex flex-col justify-center" href="https://dprp.gov.ro/" target="_blank" rel="noreferrer">
+                    <h3 className="text-gray-800 mb-3 mx-auto">Finanţat de</h3>
+                    <Image
+                    className="mx-auto"
+                      src="/logo-drp.png"
+                      alt="Logo al Guvernului României cu textul 'Departamentul pentru românii de pretutindeni' alături"
+                      width={270}
+                      height={100}
+                    />
+                  </a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* MAP */}
       <div id="map" style={{ width: '100%', height: '100vh', zIndex: 1, position:"absolute" }} className="position-absolute top-0 bottom-0"></div>  
 
-      {/* <div className="w-full mt-12">
-        <div className="flex flex-col md:flex-row gap-8 p-12 justify-center">
-          <a href="https://diasporacivica.berlin" target="_blank" rel="noreferrer">
-            <h3 className="text-gray-800 mb-3">realizat de</h3>
-            <Image
-              src="/logo-dcb.png"
-              alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
-              width={150}
-              height={65}
-            />
-          </a>
-          <a href="https://dprp.gov.ro/" target="_blank" rel="noreferrer">
-            <h3 className="text-gray-800 mb-3">finanţat de</h3>
-            <Image
-              src="/logo-drp.png"
-              alt="Logo al Guvernului României cu textul 'Departamentul pentru românii de pretutindeni' alături"
-              width={270}
-              height={100}
-            />
-          </a>
-        </div>
-      </div> */}
-      {/* <div className="flex justify-center text-xs pb-4 px-12 text-gray-800">
-        <p>Conţinutul acestui site nu reprezintă poziţia oficială a Departamentului pentru românii de pretutindeni.</p>
-      </div>
-      <div className="flex justify-center gap-5 text-xs pb-4 pt-6 px-12 text-blue-800">
-        <Link href="/terms-and-conditions" >Nutzungsbedingungen</Link>
-        <Link href="/privacy-policy" >Datenschutzerklärung</Link>
-        <Link href="/contact" >Kontakt</Link>
-      </div> */}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
 import { ArrowRightIcon } from "@heroicons/react/solid";
 
-export default function CitiesModal({cities, zoomToCity }) {
+export default function CitiesModal({cities = null, zoomToCity }) {
     let [isOpen, setIsOpen] = React.useState(false);
 
     function closeModal() {
@@ -38,15 +38,16 @@ export default function CitiesModal({cities, zoomToCity }) {
           <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
             <div>
             <ul>
-                {cities.map((city) => (
+                {cities != null &&
+                cities.map((city) => (
                   <li
-                    key={city.name}
+                    key={city.pk}
                     onClick={() => {closeModal();zoomToCity(city)}}
                     className="flex items-center justify-between py-2 cursor-pointer hover:bg-gray-100 transition"
                   >
                     <div className="flex items-center">
                       <LocationMarkerIcon className="text-red-500 h-8 w-8 mr-4" />
-                      <span className="text-gray-800">{city.full_name}</span>
+                      <span className="text-gray-800">{city.name}</span>
                     </div>
                     <div className="text-gray-500">
                         <ArrowRightIcon className="h-5 w-5 mr-5" />
