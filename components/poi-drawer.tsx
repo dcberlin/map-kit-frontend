@@ -184,7 +184,7 @@ export default function PoiDrawer({community, categories}: PoiDrawerProps) {
           {address && (
               <div className="flex items-center font-semibold text-gray-600">
                 <LocationMarkerIcon className="flex-none inline h-5 w-5 mr-3 text" />
-                <div><a href={`https://www.google.com/maps/dir/${address}`} target="_blank">{address}</a></div>
+                <div><a href={`https://www.google.com/maps/dir/${address}`} target="_blank" rel="noreferrer">{address}</a></div>
               </div>
           )}
           {email && (
