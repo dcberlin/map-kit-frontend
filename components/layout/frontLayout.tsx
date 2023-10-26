@@ -98,7 +98,7 @@ const FrontLayout = ({children, data}: PropsWithChildren<{data : any}>) => {
       });
     });
    }
-  }, [mapState]);
+  }, [mapState, data]);
 
   return (
     <div className="flex flex-col justify-between w-screen min-h-screen " style={{backgroundColor:'#344c6c'}}>
