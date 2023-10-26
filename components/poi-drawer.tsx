@@ -3,6 +3,7 @@ import {
   FlagIcon,
   LocationMarkerIcon,
   MailIcon,
+  MapIcon,
   PencilAltIcon,
   PhoneIcon,
 } from "@heroicons/react/solid";
@@ -183,7 +184,7 @@ export default function PoiDrawer({community, categories}: PoiDrawerProps) {
           {address && (
               <div className="flex items-center font-semibold text-gray-600">
                 <LocationMarkerIcon className="flex-none inline h-5 w-5 mr-3 text" />
-                <div>{address}</div>
+                <div><a href={`https://www.google.com/maps/dir/${address}`} target="_blank">{address}</a></div>
               </div>
           )}
           {email && (
@@ -210,6 +211,19 @@ export default function PoiDrawer({community, categories}: PoiDrawerProps) {
                     className="px-3 py-1 gap-1 bg-blue-200 rounded-2xl text-xs font-bold uppercase"
                 >
                   website
+                </a>
+              </div>
+          )}
+           {address && (
+              <div className="flex items-center font-semibold text-gray-600">
+                <MapIcon className="flex-none inline h-5 w-5 mr-3 text" />
+                <a
+                    href={`https://www.google.com/maps/dir/${address}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 py-1 gap-1 bg-blue-200 rounded-2xl text-xs font-bold uppercase"
+                >
+                  deschide harta
                 </a>
               </div>
           )}

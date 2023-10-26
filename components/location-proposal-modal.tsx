@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import {Field, Form, Formik} from "formik";
 
 import {PlusCircleIcon} from "@heroicons/react/outline";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 /**
  * Modal for proposing a new location
  */
 export default function LocationProposalModal({communityPk}) {
+
+
   let [isOpen, setIsOpen] = React.useState(false);
   let [locationSubmitted, setLocationSubmitted] = React.useState(false);
   let [requestFailed, setRequestFailed] = React.useState(false);
+  const [address,setAddress] = useState("");
+
+  const handleAddress = (e) => {
+    setAddress(e.value.description);
+  };
 
   function closeModal() {
     setIsOpen(false);
@@ -22,6 +30,7 @@ export default function LocationProposalModal({communityPk}) {
   }
 
   async function handleSubmit(values) {
+    values.address = address;
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/location-proposal/`, {
       method: "POST",
       body: JSON.stringify({...values, community: communityPk}),
@@ -40,9 +49,6 @@ export default function LocationProposalModal({communityPk}) {
 
     if (!values.name) {
       errors.name = "Numele este câmp obligatoriu.";
-    }
-    if (!values.address) {
-      errors.address = "Adresa este câmp obligatoriu.";
     }
     if (
       values.email !== "" &&
@@ -65,13 +71,21 @@ export default function LocationProposalModal({communityPk}) {
       <Formik
         initialValues={{
           name: "",
-          address: "",
+          address: address,
+          address_details: "",
           description: "",
           website: "",
           email: "",
           phone: "",
         }}
-        onSubmit={handleSubmit}
+        onSubmit={(values,{setFieldValue})=>{
+          try{
+            setFieldValue("address",address);
+            handleSubmit(values);
+          }catch(error){
+            console.log(error);
+          }
+        }}
         validate={validate}
       >
         {({errors, touched}) => (
@@ -96,25 +110,50 @@ export default function LocationProposalModal({communityPk}) {
                 <p className="text-red-500 my-1 text-sm h-4">{errors.name}</p>
               }
             </div>
-            <div>
-              <label
+
+            <div> 
+            <label
                 className="block text-gray-700 text-sm mb-2 font-semibold"
                 htmlFor="address"
               >
                 Adresa
               </label>
               <Field
-                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                  touched.address && errors.address && "border-red-500"
-                }`}
+                style={{display:"none"}}
                 name="address"
                 id="address"
+                value={address}
                 type="text"
                 placeholder="Karl-Marx-Allee 999, 10101 Berlin"
               />
-              {touched.address && errors.address &&
+            
+              <GooglePlacesAutocomplete
+                  debounce={800}
+                  apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+                  selectProps={
+                    {
+                      onChange: (e)=>{handleAddress(e)},
+                    }
+                  }
+                />
+              {errors.address &&
                 <p className="text-red-500 my-1 text-sm h-4">{errors.address}</p>
               }
+            </div>
+            <div>
+              <label
+                className="block text-gray-700 text-sm mb-2 font-semibold"
+                htmlFor="address_details"
+              >
+                Detalii Adresa (opţional)
+              </label>
+              <Field
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                name="address_details"
+                id="address_details"
+                type="text"
+                placeholder="Alte detalii despre adresă (etaj, intrare, etc.)"
+              />
             </div>
             <div>
               <label

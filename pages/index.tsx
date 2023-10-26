@@ -35,31 +35,35 @@ const LandingPage: NextPageWithLayout<LandingPageProps> = ({host}) => {
     return <LoadingScreen />;
   }
 
-  return <>
-    {data.map((community, index) =>
-      <Link
-        key={index}
-        href={`/${community.path_slug}`}
-        className={`flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
-                from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
-        legacyBehavior>
-        <h2 className="flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
-                from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60 text-white cursor-pointer text-3xl font-bold">{community.name}</h2>
-      </Link>)}
-    <a
-      className={`flex flex-col gap-2 justify-center items-center max-w-max h-48 bg-gradient-to-r
-          from-gray-500 to-purple-500 rounded-lg hover:hue-rotate-60 p-7 text-center cursor-pointer`}
-      onClick={() => loginWithRedirect({redirectUri: `${host}/my-communities/create`})}
-    >
-      <PlusCircleIcon className="h-10 w-10 text-white" />
-      <h2 className="text-2xl text-white font-bold">
-        Propune o comunitate nouă!
-      </h2>
-    </a>
-  </>;
+  return(
+  //  <>
+  //   {data.map((community, index) =>
+  //     <Link
+  //       key={index}
+  //       href={`/${community.path_slug}`}
+  //       className={`flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
+  //               from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60`}
+  //       legacyBehavior>
+  //       <h2 className="flex grow justify-center items-center w-80 h-32 md:h-48 bg-gradient-to-r
+  //               from-cyan-700 to-blue-700 rounded-lg hover:hue-rotate-60 text-white cursor-pointer text-3xl font-bold">{community.name}</h2>
+  //     </Link>)}
+  //   <a
+  //     className={`flex flex-col gap-2 justify-center items-center max-w-max h-48 bg-gradient-to-r
+  //         from-gray-500 to-purple-500 rounded-lg hover:hue-rotate-60 p-7 text-center cursor-pointer`}
+  //     onClick={() => loginWithRedirect({redirectUri: `${host}/my-communities/create`})}
+  //   >
+  //     <PlusCircleIcon className="h-10 w-10 text-white" />
+  //     <h2 className="text-2xl text-white font-bold">
+  //       Propune o comunitate nouă!
+  //     </h2>
+  //   </a>
+  // </>;
+  <FrontLayout data={data}/>
+  );
+
 }
 
-LandingPage.getLayout = (page) => <FrontLayout>{page}</FrontLayout>
+// LandingPage.getLayout = (page) => <FrontLayout>{page}</FrontLayout>
 
 // this adds the host to the props, together with the prodocol
 LandingPage.getInitialProps = async ({req}) => {
