@@ -180,6 +180,11 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
             </div>
           </div>
         </div>
+        <div className="flex justify-center gap-5 text-xs text-blue-800">
+          <Link href="/terms-and-conditions">Nutzungsbedingungen</Link>
+          <Link href="/privacy-policy">Datenschutzerklärung</Link>
+          <Link href="/contact">Kontakt</Link>
+        </div>
       </div>
 
       {/* MAP */}
