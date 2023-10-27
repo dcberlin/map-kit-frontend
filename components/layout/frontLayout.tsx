@@ -49,19 +49,23 @@ const FrontLayout = ({children, data}: PropsWithChildren<{data : any}>) => {
         container: 'map',
         style: 'mapbox://styles/03b8/ckvzmtn0k14xr14n7vg8aqske',
         center: [11.11829, 46.07045],
-        zoom: 4,
+        zoom: 3,
       });
       setMapState(map);
   },[]);
 
   useEffect(() => {
    if(mapState){
+    var boundaries = [];
     mapState.on('load', () => {
       data.forEach((location) => {
 
         const [minLng, minLat, maxLng, maxLat] = location.bbox;
         const centerLng = (minLng + maxLng) / 2;
         const centerLat = (minLat + maxLat) / 2;
+
+        boundaries.push([minLng, minLat]);
+
         const marker = new mapboxgl.Marker({
           element: createCustomMarker(location) // Create a custom marker element
         })
@@ -96,6 +100,8 @@ const FrontLayout = ({children, data}: PropsWithChildren<{data : any}>) => {
         });
     
       });
+
+      mapState.fitBounds(boundaries, { padding: 100 });
     });
    }
   }, [mapState]);
@@ -168,11 +174,8 @@ const FrontLayout = ({children, data}: PropsWithChildren<{data : any}>) => {
 
       {children ? <div>{children}</div> : null}
      
-
       {/* MAP */}
       <div id="map" style={{ width: '100%', height: '100vh', zIndex: 1, position:"absolute" }} className="position-absolute top-0 bottom-0"></div>  
-
-
     </div>
   );
 }
