@@ -24,19 +24,19 @@ const FrontLayout = ({children, data}: PropsWithChildren<{data : any}>) => {
 
   function createCustomMarker(location) {
     const customMarker = document.createElement('div');
-  customMarker.style.width = '30px'; // Set the width of the custom marker
-  customMarker.style.height = '30px'; // Set the height of the custom marker
-  customMarker.style.borderRadius = '50%'; // Make it a circle
-  customMarker.style.backgroundColor = 'rgba(255, 0, 0, 0.5'; // Set the background color for the circle
-  customMarker.style.cursor = 'pointer'; // Set the background color for the circle
+  customMarker.style.width = '30px'; 
+  customMarker.style.height = '30px'; 
+  customMarker.style.borderRadius = '50%'; 
+  customMarker.style.backgroundColor = 'rgba(255, 0, 0, 0.5'; 
+  customMarker.style.cursor = 'pointer'; 
 
   const markerText = document.createElement('div');
-  markerText.textContent = location.name.charAt(0); // Display the initial of the location name
+  markerText.textContent = location.name.charAt(0); 
   markerText.style.textAlign = 'center';
-  markerText.style.lineHeight = '30px'; // Vertically center the text
-  markerText.style.fontSize = '16px'; // Adjust the font size as needed
-  markerText.style.fontWeight = 'bold'; // Make the letter bold
-  markerText.style.color = 'white'; // Set the text color
+  markerText.style.lineHeight = '30px';
+  markerText.style.fontSize = '16px';
+  markerText.style.fontWeight = 'bold';
+  markerText.style.color = 'white'; 
 
   customMarker.appendChild(markerText);
 
