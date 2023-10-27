@@ -15,7 +15,7 @@ export default function CitiesModal({cities = null, zoomToCity }) {
 
 
     return(<>
-    <div className="fixed right-[140px] top-5 z-20">
+    <div className="fixed left-7 sm:right-[140px] sm:left-auto top-5 z-20">
         <button className="flex items-center gap-1 mr-3 bg-white pl-4 pr-1 rounded-3xl drop-shadow-2xl" onClick={openModal}>
           <span className="text-md font-bold text-gray-600">Comunități</span>
           <LocationMarkerIcon className="h-10 w-10 text-gray-400" />

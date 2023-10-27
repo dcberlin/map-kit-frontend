@@ -112,62 +112,77 @@ const FrontLayout = ({children, data}: PropsWithChildren<{data : any}>) => {
       <CitiesModal cities={data} zoomToCity={zoomToCity}/>
   
   {/* TITLU */}
-      <div className="fixed w-full sm:w-auto bottom-0 sm:left-5 sm:top-0 z-20 bg-black bg-opacity-30 sm:bg-transparent sm:h-20">
+      <div className="fixed w-full sm:w-auto bottom-0 sm:left-5 sm:top-0 z-20 bg-white bg-opacity-50 sm:bg-transparent sm:h-20">
         <div className="flex flex-col gap-5 p-8">
           <a href="/">
-            <div className="flex">
+            <div className="flex justify-center">
               <Image
                   src="/logo-dcb.png"
                   alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
                   width={50}
                   height={50}
                 />
-              <h1 className="text-4xl md:text-5xl font-bold text-black text-center sm:text-left ml-2">Harta Diasporei</h1>
+              <h1 className="text-2xl my-auto sm:text-5xl font-bold text-black text-center sm:text-left ml-2 just">Harta Diasporei</h1>
             </div>
           </a>
-          <h4 className="text-xl md:text-2xl text-center sm:text-left text-black">Kit de dezvoltare pentru harta comunității <br/> românești din orașul
+          <h4 className="text-sm sm:text-xl md:text-2xl text-center sm:text-left text-black">Kit de dezvoltare pentru harta comunității <br/> românești din orașul
             tău</h4>
+
+            <div className="flex justify-center sm:hidden">
+              <div className="w-1/3 flex justify-center gap-5 text-xs text-blue-800">
+                <Link href="/terms-and-conditions" >Nutzungsbedingungen</Link>
+                <Link href="/privacy-policy" >Datenschutzerklärung</Link>
+                <Link href="/contact" >Kontakt</Link>
+              </div>
+            </div>
         </div>
       </div>
 
     {/* Footer */}
-      <div className="fixed w-auto sm:right-0 sm:bottom-0 z-20 bg-white bg-opacity-50 hidden sm:block" style={{zIndex:2}}>
-        <div className="flex flex-col gap-2 pt-5">
-          <div className="flex justify-center text-md px-12 text-gray-800">
-            <p>Conţinutul acestui site nu reprezintă poziţia oficială a Departamentului <br/> pentru românii de pretutindeni.</p>
-          </div>
+      <div className="fixed w-screen sm:bottom-0 z-20 bg-white bg-opacity-50 hidden sm:block" style={{zIndex:2}}>
+        <div className="flex flex-col gap-2 pt-1">
           <div className="w-full pt-0 mt-0 pb-0">
             <div className="flex gap-8 justify-center px-3 pr-12 py-0 my-0">
-              <div className="w-1/2 p-4 flex justify-center pt-0 mt-0">
+              <div className="w-1/5 p-4 flex justify-center pt-0 mt-0 pb-2">
                 <a className="flex flex-col justify-center" href="https://diasporacivica.berlin" target="_blank" rel="noreferrer">
-                  <h3 className="text-gray-800 mb-3">Realizat de</h3>
+                  <h3 className="text-gray-800 mb-3 text-sm">Realizat de</h3>
                   <Image
                   className="mx-auto"
                     src="/logo-dcb_old.png"
                     alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
-                    width={100}
-                    height={100}
+                    width={70}
+                    height={70}
                   />
                 </a>
                 </div>
-                <div className="w-1/2 p-4 flex justify-center pt-0 mt-0">
+                <div className="w-3/5 p-4 pb-2">
+                  <div className="flex justify-center text-md px-12 text-gray-800 pb-4">
+                    <p className="text-sm">
+                      KIT 2.0 PENTRU
+                      DEZVOLTAREA COMUNITĂȚII ROMÂNEȘTI DIN ORAȘUL TĂU
+                      Proiect finanţat de Departamentul pentru Românii de Pretutindeni (mai – octombrie 2023)
+                      Conţinutul acestui site nu reprezintă poziţia oficială a Departamentului pentru Românii de Pretutindeni
+                    </p>
+                  </div>
+                  <div className="flex justify-center gap-5 text-xs text-blue-800">
+                    <Link href="/terms-and-conditions" >Nutzungsbedingungen</Link>
+                    <Link href="/privacy-policy" >Datenschutzerklärung</Link>
+                    <Link href="/contact" >Kontakt</Link>
+                  </div>
+                </div>
+                <div className="w-1/5 p-4 flex justify-center pt-0 mt-0 pb-2">
                   <a className="flex flex-col justify-center" href="https://dprp.gov.ro/" target="_blank" rel="noreferrer">
-                    <h3 className="text-gray-800 mb-3 mx-auto">Finanţat de</h3>
+                    <h3 className="text-gray-800 mb-3 mx-auto text-sm">Finanţat de</h3>
                     <Image
                     className="mx-auto"
                       src="/logo-drp.png"
                       alt="Logo al Guvernului României cu textul 'Departamentul pentru românii de pretutindeni' alături"
-                      width={270}
-                      height={100}
+                      width={150}
+                      height={150}
                     />
                   </a>
                 </div>
             </div>
-          </div>
-          <div className="flex justify-center gap-5 text-xs pb-8 px-12 text-blue-800">
-            <Link href="/terms-and-conditions" >Nutzungsbedingungen</Link>
-            <Link href="/privacy-policy" >Datenschutzerklärung</Link>
-            <Link href="/contact" >Kontakt</Link>
           </div>
         </div>
       </div>
