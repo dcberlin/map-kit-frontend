@@ -131,10 +131,14 @@ export default function LocationProposalModal({communityPk}) {
                   debounce={800}
                   apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
                   selectProps={
-                    {
+                    { 
                       onChange: (e)=>{handleAddress(e)},
                     }
                   }
+                  autocompletionRequest={{
+                    types: ["address"],
+                  }}
+                 
                 />
               {errors.address &&
                 <p className="text-red-500 my-1 text-sm h-4">{errors.address}</p>
