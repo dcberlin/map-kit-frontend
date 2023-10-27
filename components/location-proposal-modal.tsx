@@ -14,6 +14,7 @@ export default function LocationProposalModal({communityPk}) {
   let [locationSubmitted, setLocationSubmitted] = React.useState(false);
   let [requestFailed, setRequestFailed] = React.useState(false);
   const [address,setAddress] = useState("");
+  const [errorAddress,setErrorAddress] = useState(false);
 
   const handleAddress = (e) => {
     setAddress(e.value.description);
@@ -30,18 +31,24 @@ export default function LocationProposalModal({communityPk}) {
   }
 
   async function handleSubmit(values) {
-    values.address = address;
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/location-proposal/`, {
-      method: "POST",
-      body: JSON.stringify({...values, community: communityPk}),
-      headers: {"Content-Type": "application/json"},
-    }).then((response) => {
-      if (response.status !== 201) {
-        setRequestFailed(true);
-      } else {
-        setLocationSubmitted(true);
-      }
-    });
+    if(address){
+      setErrorAddress(false);
+      values.address = address;
+      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/location-proposal/`, {
+        method: "POST",
+        body: JSON.stringify({...values, community: communityPk}),
+        headers: {"Content-Type": "application/json"},
+      }).then((response) => {
+        if (response.status !== 201) {
+          setRequestFailed(true);
+        } else {
+          setLocationSubmitted(true);
+        }
+      });
+    }else{
+      setErrorAddress(true);
+    }
+  
   }
 
   function validate(values) {
@@ -140,8 +147,8 @@ export default function LocationProposalModal({communityPk}) {
                   }}
                  
                 />
-              {errors.address &&
-                <p className="text-red-500 my-1 text-sm h-4">{errors.address}</p>
+              {errorAddress &&
+                <p className="text-red-500 my-1 text-sm h-4">Adresa este invalidă.</p>
               }
             </div>
             <div>
