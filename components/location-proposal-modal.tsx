@@ -123,7 +123,7 @@ export default function LocationProposalModal({ communityPk }) {
                 Adresa
               </label>
               <Field
-                style={{ display: "none" }}
+                className="hidden"
                 name="address"
                 id="address"
                 value={address}
