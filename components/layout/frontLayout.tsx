@@ -109,20 +109,19 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
       <CitiesModal cities={data} zoomToCity={zoomToCity} />
 
       {/* TITLU */}
-      <div className="fixed w-full sm:w-auto bottom-0 sm:left-5 sm:top-0 z-20 bg-black bg-opacity-30 sm:bg-transparent sm:h-20">
-        <div className="flex flex-col gap-5 p-8">
-          <div className="flex">
-            <Image
-              src="/logo-dcb.png"
-              alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
-              width={50}
-              height={50}
-            />
-            <h1 className="text-4xl md:text-5xl font-bold text-black text-center sm:text-left ml-2">
-              Harta Diasporei
-            </h1>
-          </div>
-          <h4 className="text-xl md:text-2xl text-center sm:text-left text-black">
+      <div className="fixed w-1/2 sm:w-auto sm:left-5 top-0 z-20 p-6">
+        <div className="flex flex-col gap-2">
+          <Image
+            className="shrink"
+            src="/logo-dcb.png"
+            alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
+            width={50}
+            height={50}
+          />
+          <h1 className="text-4xl md:text-5xl font-bold text-black">
+            Harta Diasporei
+          </h1>
+          <h4 className="text-sm font-semibold sm:font-normal sm:text-lg text-gray-800">
             Kit de dezvoltare pentru harta comunității <br /> românești din
             orașul tău
           </h4>
@@ -130,43 +129,28 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
       </div>
 
       {/* Footer */}
-      <div className="fixed w-auto sm:right-0 sm:bottom-0 z-20 bg-white bg-opacity-50 hidden sm:block">
-        <div className="flex flex-col gap-2 pt-5">
-          <div className="flex justify-center text-md px-12 text-gray-800">
+      <div className="fixed w-auto right-0 bottom-0 z-20 bg-white bg-opacity-80 sm:block p-6">
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1 justify-center text-sm text-gray-800">
             <p>
-              Conţinutul acestui site nu reprezintă poziţia oficială a
-              Departamentului <br /> pentru românii de pretutindeni.
+              KIT 2.0 PENTRU DEZVOLTAREA COMUNITĂȚII ROMÂNEȘTI DIN ORAȘUL TĂU
+            </p>
+            <p>
+              Proiect finanţat de Departamentul pentru Românii de Pretutindeni
+              (mai – octombrie 2023)
             </p>
           </div>
-          <div className="w-full pt-0 mt-0">
-            <div className="flex gap-8 justify-center px-3 pr-12 py-0 my-0">
-              <div className="w-1/2 p-4 flex justify-center pt-0 mt-0">
+          <div className="w-full">
+            <div className="flex justify-center">
+              <div className="w-1/2 flex justify-between">
                 <a
-                  className="flex flex-col justify-center"
-                  href="https://diasporacivica.berlin"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <h3 className="text-gray-800 mb-3">Realizat de</h3>
-                  <Image
-                    className="mx-auto"
-                    src="/logo-dcb_old.png"
-                    alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
-                    width={100}
-                    height={100}
-                  />
-                </a>
-              </div>
-              <div className="w-1/2 p-4 flex justify-center pt-0 mt-0">
-                <a
-                  className="flex flex-col justify-center"
+                  className="flex flex-col"
                   href="https://dprp.gov.ro/"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <h3 className="text-gray-800 mb-3 mx-auto">Finanţat de</h3>
+                  <h3 className="text-gray-800 mb-3 text-sm">Finanţat de</h3>
                   <Image
-                    className="mx-auto"
                     src="/logo-drp.png"
                     alt="Logo al Guvernului României cu textul 'Departamentul pentru românii de pretutindeni' alături"
                     width={270}
@@ -174,6 +158,28 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
                   />
                 </a>
               </div>
+              <div className="w-1/2 flex justify-between">
+                <a
+                  className="flex flex-col"
+                  href="https://diasporacivica.berlin"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <h3 className="text-gray-800 mb-3 text-sm">Realizat de</h3>
+                  <Image
+                    src="/logo-dcb_old.png"
+                    alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
+                    width={100}
+                    height={100}
+                  />
+                </a>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center text-sm text-gray-800 mt-3">
+              <p>
+                Conţinutul acestui site nu reprezintă poziţia oficială a
+                Departamentului pentru Românii de Pretutindeni.
+              </p>
             </div>
           </div>
         </div>
