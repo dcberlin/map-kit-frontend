@@ -9,20 +9,6 @@ function AuthWidget() {
   const ref = useRef(null);
   const [, setShowFallbackIcon] = useState(false);
 
-  const onClickOutside = () => setMenuVisible(false);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        onClickOutside();
-      }
-    };
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  });
-
   return (
     <>
       {isAuthenticated ? (
@@ -54,11 +40,11 @@ function AuthWidget() {
         </div>
       ) : (
         <button
-          className="flex items-center gap-1 mr-3 bg-white pl-4 pr-1 rounded-3xl drop-shadow-2xl"
+          className="flex items-center gap-1 mr-3 bg-white pl-4 rounded-3xl drop-shadow-2xl"
           onClick={loginWithRedirect}
         >
           <span className="text-md font-bold text-gray-600">Login</span>
-          <UserCircleIcon className="h-10 w-10 text-gray-400" />
+          <UserCircleIcon className="h-8 w-8 text-gray-400" />
         </button>
       )}
       {menuVisible && (
@@ -86,11 +72,12 @@ function AuthWidget() {
             </li>
             <li>
               <a
-                onClick={() =>
+                onClick={() => {
+                  console.log("LOGGINGOUT");
                   logout({
                     returnTo: process.env.NEXT_PUBLIC_WEB_APP_BASE_URL,
-                  })
-                }
+                  });
+                }}
                 className="block text-red-800 cursor-pointer px-4 py-1 hover:bg-gray-50 bg-white rounded-3xl"
               >
                 Logout
