@@ -171,7 +171,7 @@ const FrontLayout = ({children, data}: PropsWithChildren<{data : any}>) => {
                   </div>
                 </div>
                 <div className="w-1/5 p-4 flex justify-center pt-0 mt-0 pb-2">
-                  <a className="flex flex-col justify-center" href="https://dprp.gov.ro/" target="_blank" rel="noreferrer">
+                  <a className="flex flex-col justify-center" href="https://dprp.gov.ro/web/" target="_blank" rel="noreferrer">
                     <h3 className="text-gray-800 mb-3 mx-auto text-sm">Finanţat de</h3>
                     <Image
                     className="mx-auto"
