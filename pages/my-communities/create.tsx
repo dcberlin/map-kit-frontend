@@ -44,7 +44,7 @@ export default function CommunityCreateProposal() {
         <AuthWidget />
       </div>
       <div className="flex w-screen items-center justify-center bg-gray-200">
-        <div className="flex flex-col mt-20 mb-20 h-2/3 w-2/3 gap-6 px-20 py-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
+        <div className="flex flex-col mt-32 mb-20 h-2/3 w-2/3 gap-6 px-20 py-12 drop-shadow-2xl bg-white rounded-xl overflow-auto">
           <div className="flex w-full justify-end">
             <Link href="/my-communities" legacyBehavior>
               <button>
