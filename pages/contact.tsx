@@ -4,6 +4,12 @@ import FrontLayout from "../components/layout/frontLayout";
 import * as Yup from 'yup';
 import {Field, Form, FormikProps, withFormik} from 'formik';
 
+import useSWR from "swr";
+import ErrorScreen from "../components/error-screen";
+import LoadingScreen from "../components/loading-screen";
+import {URLS} from "../api";
+import {Community} from "../models";
+
 // @see https://formik.org/docs/guides/typescript
 
 // Shape of form values
@@ -102,9 +108,33 @@ const ContactForm = withFormik<MyFormProps, FormValues>({
 })(InnerForm);
 
 const ContactPage: NextPageWithLayout = () => {
-  return <ContactForm title="Contact" initialEmail=""/>;
-}
 
-ContactPage.getLayout = (page) => <FrontLayout>{page}</FrontLayout>
+  const {data, error} = useSWR<Community[], Error>(URLS.COMMUNITIES, async (url) => {
+    const res = await fetch(url);
+    return res.json();
+  });
+
+  if (error) {
+    console.error(error);
+    return <ErrorScreen />;
+  }
+
+  if (!data) {
+    return <LoadingScreen />;
+  }
+
+  return <>
+    <FrontLayout data={data}>
+      <div className="flex flex-col w-full h-screen items-center justify-center">
+        <div
+            className={`flex flex-wrap w-1/5 pt-4 pb-8 justify-center drop-shadow-2xl
+            rounded-xl bg-white overflow-auto max-h-[700px]`} style={{zIndex:10}}
+          >
+          <ContactForm title="Contact" initialEmail=""/>
+        </div>
+      </div>
+    </FrontLayout>
+    </>;
+}
 
 export default ContactPage;
