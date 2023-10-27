@@ -93,7 +93,7 @@ export default function LocationProposalModal({ communityPk }) {
         validate={validate}
       >
         {({ errors, touched }) => (
-          <Form className="flex flex-col mt-8">
+          <Form className="flex flex-col mt-8 gap-2">
             <div>
               <label
                 className="block text-gray-700 text-sm mb-2 font-semibold"
