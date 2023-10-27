@@ -14,9 +14,9 @@ export default function LocationProposalModal({ communityPk }) {
   const [address, setAddress] = useState("");
   const [errorAddress, setErrorAddress] = useState(false);
 
-  const handleAddress = (e) => {
-    setAddress(e.value.description);
-  };
+  function handleAddress(e) {
+    setAddress(e?.value?.description || "");
+  }
 
   function closeModal() {
     setIsOpen(false);
@@ -135,6 +135,7 @@ export default function LocationProposalModal({ communityPk }) {
                 debounce={800}
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
                 selectProps={{
+                  isClearable: true,
                   onChange: (e) => {
                     handleAddress(e);
                   },
