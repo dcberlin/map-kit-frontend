@@ -141,6 +141,7 @@ export default function LocationProposalModal({ communityPk }) {
                 }}
                 autocompletionRequest={{
                   types: ["address"],
+                  language: "ro",
                 }}
               />
               {errorAddress && (
