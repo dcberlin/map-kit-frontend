@@ -109,44 +109,55 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
       <CitiesModal cities={data} zoomToCity={zoomToCity} />
 
       {/* TITLU */}
-      <div className="fixed w-1/2 sm:w-auto sm:left-5 top-0 z-20 p-6">
-        <div className="flex flex-col gap-2">
-          <Image
-            className="shrink"
-            src="/logo-dcb.png"
-            alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
-            width={50}
-            height={50}
-          />
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
-            Harta Diasporei
-          </h1>
-          <div className="flex flex-col gap-2">
-            <p className="text-xs">un proiect</p>
+      <div className="fixed w-1/2 sm:w-auto top-0 z-20 p-6">
+        <a
+          href="https://diasporacivica.berlin/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <div className="fixed left-5 top-0 bg-white/90 p-3 rounded-b-2xl">
+            <div className="flex flex-col gap-2">
+              <Image
+                src="/logo-dcb_old.png"
+                alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
+                width={100}
+                height={100}
+              />
+            </div>
+          </div>
+        </a>
+        <div className="flex gap-2 mt-16 items-center">
+          <div className="flex-1/2 shrink-0">
             <Image
-              src="/logo-dcb_old.png"
+              className="w-full"
+              src="/logo-dcb.png"
               alt="Logo rotund abstract al asociaţiei Diaspora Civică Berlin"
-              width={100}
-              height={100}
+              width={50}
+              height={50}
             />
+          </div>
+          <div className="flex-1/2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+              Harta Diasporei
+            </h1>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="fixed w-full bottom-0 z-20 bg-gradient-to-r from-white to-white/30 bg-opacity-80 sm:block p-6">
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-col gap-1 justify-center text-gray-800">
-            <p className="font-semibold text-center sm:text-left text-md">
+      <div className="fixed w-full bottom-0 z-20 bg-white bg-opacity-80 sm:block p-3">
+        <div className="flex flex-col justify-between sm:flex-row gap-2">
+          <div className="flex flex-col gap-1 justify-between text-gray-800">
+            <p className="text-center sm:text-left text-xs sm:font-semibold">
               Kit 2.0 pentru dezvoltarea comunității românești din orașul tău
             </p>
-            <p className="text-sm text-center sm:text-left">
+            <p className="text-xs text-center sm:text-left">
               Proiect finanţat de Departamentul pentru Românii de Pretutindeni
               (mai – octombrie 2023)
             </p>
           </div>
-          <div className="w-full">
-            <div className="flex sm:justify-start justify-center">
+          <div className="grow-0">
+            <div className="flex sm:justify-end justify-center">
               <a
                 className="flex flex-col"
                 href="https://dprp.gov.ro/"
@@ -156,12 +167,12 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
                 <Image
                   src="/logo-drp.png"
                   alt="Logo al Guvernului României cu textul 'Departamentul pentru românii de pretutindeni' alături"
-                  width={270}
+                  width={160}
                   height={100}
                 />
               </a>
             </div>
-            <div className="flex flex-col justify-center text-sm text-gray-800 mt-3">
+            <div className="flex flex-col sm:text-right text-center text-xs text-gray-800 mt-1">
               <p>
                 Conţinutul acestui site nu reprezintă poziţia oficială a
                 Departamentului pentru Românii de Pretutindeni.
