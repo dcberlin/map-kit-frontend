@@ -105,11 +105,19 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
       className="flex flex-col justify-between w-screen min-h-screen "
       style={{ backgroundColor: "#344c6c" }}
     >
-      <AuthWidget />
-      <CitiesModal cities={data} zoomToCity={zoomToCity} />
+      <div className="fixed right-3 top-3 z-40">
+        <div className="flex flex-col gap-3 items-end">
+          <div className="grow-0">
+            <AuthWidget />
+          </div>
+          <div className="grow">
+            <CitiesModal cities={data} zoomToCity={zoomToCity} />
+          </div>
+        </div>
+      </div>
 
       {/* TITLU */}
-      <div className="fixed w-1/2 sm:w-auto top-0 z-20 p-6">
+      <div className="fixed w-1/2 sm:w-auto top-0 z-10 p-6">
         <a
           href="https://diasporacivica.berlin/"
           target="_blank"
@@ -180,7 +188,7 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center gap-5 text-xs text-blue-800">
+        <div className="flex justify-center gap-5 text-xs text-blue-800 sm:mt-0 mt-2">
           <Link href="/terms-and-conditions">Nutzungsbedingungen</Link>
           <Link href="/privacy-policy">Datenschutzerklärung</Link>
           <Link href="/contact">Kontakt</Link>

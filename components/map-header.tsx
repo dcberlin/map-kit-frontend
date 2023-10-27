@@ -9,7 +9,7 @@ interface MapHeaderProps {
 }
 
 const MapHeader = ({ community, inAdminScreen }: MapHeaderProps) => (
-  <div className="fixed left-5 top-5 z-20 text-gray-700">
+  <div className="fixed left-6 top-9 text-gray-700">
     <div className="flex justify-center items-center gap-2">
       <Image
         src="/logo-dcb.png"
