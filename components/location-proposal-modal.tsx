@@ -145,7 +145,7 @@ export default function LocationProposalModal({ communityPk }) {
               />
               {errorAddress && (
                 <p className="text-red-500 my-1 text-sm h-4">
-                  Adresa este invalidă.
+                  Adresa este câmp obligatoriu.
                 </p>
               )}
             </div>
