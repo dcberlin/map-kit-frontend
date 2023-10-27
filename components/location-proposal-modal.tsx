@@ -136,6 +136,21 @@ export default function LocationProposalModal({ communityPk }) {
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
                 selectProps={{
                   isClearable: true,
+                  placeholder: "Sonnenallee 9, 12047 Berlin",
+                  noOptionsMessage: (e) => {
+                    if (e.inputValue) {
+                      return "Niciun rezultat";
+                    } else {
+                      return "Introdu text ca să cauţi o adresă";
+                    }
+                  },
+                  loadingMessage: () => "Se caută o adresă potrivită...",
+                  styles: {
+                    placeholder: (styles) => ({
+                      ...styles,
+                      color: "#9ca3af",
+                    }),
+                  },
                   onChange: (e) => {
                     handleAddress(e);
                   },
@@ -163,7 +178,7 @@ export default function LocationProposalModal({ communityPk }) {
                 name="address_details"
                 id="address_details"
                 type="text"
-                placeholder="Alte detalii despre adresă (etaj, intrare, etc.)"
+                placeholder="Etajul 4, curtea interioară, etc."
               />
             </div>
             <div>
