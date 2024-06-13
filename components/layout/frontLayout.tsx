@@ -154,44 +154,9 @@ const FrontLayout = ({ children, data }: PropsWithChildren<{ data: any }>) => {
 
       {/* Footer */}
       <div className="fixed w-full bottom-0 z-20 bg-white bg-opacity-80 sm:block p-3">
-        <div className="flex flex-col justify-between sm:flex-row gap-2">
-          <div className="flex flex-col gap-1 justify-between text-gray-800">
-            <p className="text-center sm:text-left text-xs sm:font-semibold">
-              Kit 2.0 pentru dezvoltarea comunității românești din orașul tău
-            </p>
-            <p className="text-xs text-center sm:text-left">
-              Proiect finanţat de Departamentul pentru Românii de Pretutindeni
-              (mai – octombrie 2023)
-            </p>
-          </div>
-          <div className="grow-0">
-            <div className="flex sm:justify-end justify-center">
-              <a
-                className="flex flex-col"
-                href="https://dprp.gov.ro/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Image
-                  src="/logo-drp.png"
-                  alt="Logo al Guvernului României cu textul 'Departamentul pentru românii de pretutindeni' alături"
-                  width={160}
-                  height={100}
-                />
-              </a>
-            </div>
-            <div className="flex flex-col sm:text-right text-center text-xs text-gray-800 mt-1">
-              <p>
-                Conţinutul acestui site nu reprezintă poziţia oficială a
-                Departamentului pentru Românii de Pretutindeni.
-              </p>
-            </div>
-          </div>
-        </div>
         <div className="flex justify-center gap-5 text-xs text-blue-800 sm:mt-0 mt-2">
           <Link href="/terms-and-conditions">Nutzungsbedingungen</Link>
           <Link href="/privacy-policy">Datenschutzerklärung</Link>
-          <Link href="/contact">Kontakt</Link>
         </div>
       </div>
 
