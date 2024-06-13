@@ -1,6 +1,5 @@
 import React from "react";
-import {NextPageWithLayout} from "./_app";
-import FrontLayout from "../components/layout/frontLayout";
+import { NextPageWithLayout } from "./_app";
 
 const AdminsCodeOfConduct: NextPageWithLayout = () =>
   <div className="flex flex-col gap-3 p-8">
@@ -17,6 +16,6 @@ const AdminsCodeOfConduct: NextPageWithLayout = () =>
       administra comunitatea respectivă.</p>
   </div>;
 
-AdminsCodeOfConduct.getLayout = (page) => <FrontLayout>{page}</FrontLayout>
+AdminsCodeOfConduct.getLayout = (page) => <>{page}</>
 
 export default AdminsCodeOfConduct;
